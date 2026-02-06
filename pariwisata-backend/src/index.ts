@@ -20,6 +20,17 @@ interface Destination {
     image?: string
 }
 
+interface Report {
+    id: string
+    title: string
+    category: string
+    date: string
+    author: string
+    status: 'Published' | 'Draft' | 'Review'
+    size: string
+    fileData?: string // Base64 string
+}
+
 const dbDestinations: Destination[] = [
     { id: 'd1', label: 'Pulau Panjang', type: 'file', tags: ['destinasi', 'alam'], users: 12, href: '/destinasi/pulau-panjang' },
     { id: 'd2', label: 'Karimunjawa', type: 'file', tags: ['destinasi', 'favorit'], users: 24, href: '/destinasi/karimunjawa' },
@@ -27,6 +38,15 @@ const dbDestinations: Destination[] = [
     { id: 'd4', label: 'Benteng Portugis', type: 'file', tags: ['destinasi', 'sejarah'], users: 5, href: '/destinasi/benteng-portugis' },
     { id: 'd5', label: 'Museum RA Kartini', type: 'file', tags: ['destinasi', 'sejarah'], users: 15, href: '/destinasi/museum-ra-kartini' },
     { id: 'd6', label: 'Air Terjun Songgo Langit', type: 'file', tags: ['destinasi', 'alam'], users: 7, href: '/destinasi/air-terjun-songgo-langit' },
+]
+
+const dbReports: Report[] = [
+    { id: 'RPT-001', title: 'Laporan Kunjunguan Bulanan - Januari 2026', category: 'Statistik', date: '31 Jan 2026', author: 'Adi Nugroho', status: 'Published', size: '2.4 MB' },
+    { id: 'RPT-002', title: 'Evaluasi Kebersihan Pantai Kartini', category: 'Operasional', date: '28 Jan 2026', author: 'Siti Aminah', status: 'Review', size: '1.2 MB' },
+    { id: 'RPT-003', title: 'Audit Keuangan Tiket Masuk Q4 2025', category: 'Keuangan', date: '15 Jan 2026', author: 'Budi Santoso', status: 'Draft', size: '4.8 MB' },
+    { id: 'RPT-004', title: 'Laporan Insiden Keamanan - Karimunjawa', category: 'Insiden', date: '12 Jan 2026', author: 'Security Team', status: 'Published', size: '850 KB' },
+    { id: 'RPT-005', title: 'Proposal Pengembangan Fasilitas Museum', category: 'Perencanaan', date: '05 Jan 2026', author: 'Dinas Pariwisata', status: 'Review', size: '5.6 MB' },
+    { id: 'RPT-006', title: 'Rekapitulasi Event Budaya 2025', category: 'Event', date: '02 Jan 2026', author: 'Event Organizer', status: 'Published', size: '3.1 MB' },
 ]
 
 app.get('/', (c) => {
@@ -143,6 +163,44 @@ app.get('/destinasi/id/:id', (c) => {
     }
 
     return c.json(destination)
+    return c.json(destination)
+})
+
+// Report Endpoints
+app.get('/laporan', (c) => {
+    return c.json(dbReports)
+})
+
+app.post('/laporan', async (c) => {
+    try {
+        const body = await c.req.json()
+        if (!body.title) return c.json({ error: 'Title required' }, 400)
+
+        const newReport: Report = {
+            id: `RPT-${String(dbReports.length + 1).padStart(3, '0')}`,
+            title: body.title,
+            category: body.category || 'Umum',
+            date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+            author: 'Admin', // Hardcoded for now
+            status: body.status || 'Draft',
+            size: body.size || '0 KB',
+            fileData: body.fileData
+        }
+
+        dbReports.unshift(newReport) // Add to beginning
+        return c.json({ message: 'Report created', data: newReport }, 201)
+    } catch (e) {
+        return c.json({ error: 'Invalid JSON' }, 400)
+    }
+})
+
+app.delete('/laporan/:id', (c) => {
+    const id = c.req.param('id')
+    const index = dbReports.findIndex(r => r.id === id)
+    if (index === -1) return c.json({ error: 'Not found' }, 404)
+
+    const deleted = dbReports.splice(index, 1)
+    return c.json({ message: 'Deleted', data: deleted[0] })
 })
 
 const port = 4000

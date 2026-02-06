@@ -12,67 +12,13 @@ import {
     MoreHorizontal,
     CheckCircle,
     Clock,
-    AlertCircle
+    AlertCircle,
+    Trash2
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // Mock Data
-const reports = [
-    {
-        id: 'RPT-001',
-        title: 'Laporan Kunjunguan Bulanan - Januari 2026',
-        category: 'Statistik',
-        date: '31 Jan 2026',
-        author: 'Adi Nugroho',
-        status: 'Published',
-        size: '2.4 MB'
-    },
-    {
-        id: 'RPT-002',
-        title: 'Evaluasi Kebersihan Pantai Kartini',
-        category: 'Operasional',
-        date: '28 Jan 2026',
-        author: 'Siti Aminah',
-        status: 'Review',
-        size: '1.2 MB'
-    },
-    {
-        id: 'RPT-003',
-        title: 'Audit Keuangan Tiket Masuk Q4 2025',
-        category: 'Keuangan',
-        date: '15 Jan 2026',
-        author: 'Budi Santoso',
-        status: 'Draft',
-        size: '4.8 MB'
-    },
-    {
-        id: 'RPT-004',
-        title: 'Laporan Insiden Keamanan - Karimunjawa',
-        category: 'Insiden',
-        date: '12 Jan 2026',
-        author: 'Security Team',
-        status: 'Published',
-        size: '850 KB'
-    },
-    {
-        id: 'RPT-005',
-        title: 'Proposal Pengembangan Fasilitas Museum',
-        category: 'Perencanaan',
-        date: '05 Jan 2026',
-        author: 'Dinas Pariwisata',
-        status: 'Review',
-        size: '5.6 MB'
-    },
-    {
-        id: 'RPT-006',
-        title: 'Rekapitulasi Event Budaya 2025',
-        category: 'Event',
-        date: '02 Jan 2026',
-        author: 'Event Organizer',
-        status: 'Published',
-        size: '3.1 MB'
-    }
-]
+import { useRouter } from 'next/navigation'
 
 const container = {
     hidden: { opacity: 0 },
@@ -89,8 +35,90 @@ const item = {
     show: { opacity: 1, y: 0 }
 }
 
+import { Modal } from '@/components/ui/modal'
+
 export default function LaporanPage() {
+    const router = useRouter()
     const [filterStatus, setFilterStatus] = useState('All')
+    const [reports, setReports] = useState<any[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [selectedReport, setSelectedReport] = useState<any>(null)
+
+    // Fetch Reports
+    const fetchReports = async () => {
+        try {
+            const res = await fetch('http://localhost:4000/laporan')
+            if (res.ok) {
+                const data = await res.json()
+                setReports(data)
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    React.useEffect(() => {
+        fetchReports()
+    }, [])
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('Hapus laporan ini?')) return
+        try {
+            await fetch(`http://localhost:4000/laporan/${id}`, { method: 'DELETE' })
+            fetchReports()
+        } catch (e) { console.error(e) }
+    }
+
+    const downloadFile = (report: any) => {
+        if (!report.fileData) return
+
+        // Create virtual link
+        const link = document.createElement('a')
+        link.href = report.fileData
+
+        // Determine extension
+        let extension = 'bin'
+        if (report.fileData.startsWith('data:image/png')) extension = 'png'
+        else if (report.fileData.startsWith('data:image/jpeg')) extension = 'jpg'
+        else if (report.fileData.startsWith('data:application/pdf')) extension = 'pdf'
+        else if (report.fileData.startsWith('data:application/vnd.openxmlformats-officedocument.wordprocessingml.document')) extension = 'docx'
+
+        link.download = `${report.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.${extension}`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+
+    const [selectedMonth, setSelectedMonth] = useState('All Time')
+    const [showMonthPicker, setShowMonthPicker] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
+
+    // Filter Logic
+    const filteredReports = reports.filter(r => {
+        const matchesStatus = filterStatus === 'All' || r.status === filterStatus
+        const matchesMonth = selectedMonth === 'All Time' || r.date.includes(selectedMonth)
+        const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase())
+        return matchesStatus && matchesMonth && matchesSearch
+    })
+
+    // Pagination Logic
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 5
+    const totalPages = Math.ceil(filteredReports.length / itemsPerPage)
+
+    // Reset page when filter changes
+    React.useEffect(() => {
+        setCurrentPage(1)
+    }, [filterStatus, selectedMonth, searchQuery])
+
+    const paginatedReports = filteredReports.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    )
+
+    if (isLoading) return <div className="flex h-96 items-center justify-center">Loading...</div>
 
     return (
         <div className="space-y-8">
@@ -101,13 +129,39 @@ export default function LaporanPage() {
                     <p className="text-slate-500 mt-1">Arsip dan manajemen dokumen laporan pariwisata.</p>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-colors font-medium text-sm">
+                <div className="flex items-center gap-3 relative">
+                    <button
+                        onClick={() => setShowMonthPicker(!showMonthPicker)}
+                        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-colors font-medium text-sm"
+                    >
                         <Calendar size={16} />
-                        Jan 2026
+                        {selectedMonth}
                         <ChevronDown size={14} className="text-slate-400" />
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm shadow-lg shadow-blue-500/25">
+
+                    {showMonthPicker && (
+                        <div className="absolute top-12 left-0 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-1 z-20">
+                            {['All Time', 'Jan 2026', 'Feb 2026', 'Dec 2025'].map((month) => (
+                                <button
+                                    key={month}
+                                    onClick={() => {
+                                        setSelectedMonth(month)
+                                        setShowMonthPicker(false)
+                                    }}
+                                    className={cn(
+                                        "w-full text-left px-4 py-2 text-sm hover:bg-slate-50 transition-colors",
+                                        selectedMonth === month ? "text-blue-600 font-medium bg-blue-50" : "text-slate-600"
+                                    )}
+                                >
+                                    {month}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                    <button
+                        onClick={() => router.push('/laporan/tambah')}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm shadow-lg shadow-blue-500/25"
+                    >
                         <FileText size={18} />
                         Buat Laporan Baru
                     </button>
@@ -154,13 +208,15 @@ export default function LaporanPage() {
                         <input
                             type="text"
                             placeholder="Cari judul laporan..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm"
                         />
                     </div>
 
                     <div className="flex items-center gap-2">
                         <div className="flex items-center bg-slate-100 rounded-lg p-1">
-                            {['All', 'Published', 'Draft'].map((status) => (
+                            {['All', 'Published', 'Draft', 'Review'].map((status) => (
                                 <button
                                     key={status}
                                     onClick={() => setFilterStatus(status)}
@@ -197,14 +253,15 @@ export default function LaporanPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                            {reports.map((report) => (
+                            {paginatedReports.map((report) => (
                                 <motion.tr
                                     key={report.id}
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true }}
                                     variants={item}
-                                    className="hover:bg-slate-50 transition-colors group"
+                                    onClick={() => setSelectedReport(report)}
+                                    className="hover:bg-slate-50 transition-colors group cursor-pointer"
                                 >
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
@@ -239,9 +296,34 @@ export default function LaporanPage() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                                            <MoreHorizontal size={18} />
-                                        </button>
+                                        <div className="flex items-center justify-end gap-2">
+                                            {/* Download Button */}
+                                            {report.fileData && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        downloadFile(report)
+                                                    }}
+                                                    className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                    title="Download File"
+                                                >
+                                                    <Download size={18} />
+                                                </button>
+                                            )}
+
+                                            <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                <MoreHorizontal size={18} />
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleDelete(report.id)
+                                                }}
+                                                className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
                                     </td>
                                 </motion.tr>
                             ))}
@@ -251,13 +333,129 @@ export default function LaporanPage() {
 
                 {/* Pagination */}
                 <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
-                    <p>Showing <span className="font-medium text-slate-900">1-6</span> of <span className="font-medium text-slate-900">142</span> results</p>
+                    <p>Showing <span className="font-medium text-slate-900">{(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, filteredReports.length)}</span> of <span className="font-medium text-slate-900">{filteredReports.length}</span> results</p>
                     <div className="flex gap-2">
-                        <button className="px-3 py-1 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50">Previous</button>
-                        <button className="px-3 py-1 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50">Next</button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="px-3 py-1 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="px-3 py-1 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Next
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* Detail Modal */}
+            <Modal
+                isOpen={!!selectedReport}
+                onClose={() => setSelectedReport(null)}
+                title="Detail Dokumen"
+                className="max-w-xl"
+            >
+                {selectedReport && (
+                    <div className="space-y-6">
+                        {/* Header Info */}
+                        <div className="flex items-start gap-4">
+                            <div className="p-3 bg-blue-50 text-blue-600 rounded-xl shrink-0">
+                                <FileText size={32} />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-slate-900 leading-tight mb-1">
+                                    {selectedReport.title}
+                                </h3>
+                                <p className="text-sm text-slate-500">
+                                    Diupload oleh <span className="font-medium text-slate-700">{selectedReport.author}</span> pada {selectedReport.date}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Metadata Grid */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="p-4 bg-slate-50 rounded-xl space-y-1">
+                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Kategori</p>
+                                <p className="font-semibold text-slate-900">{selectedReport.category}</p>
+                            </div>
+                            <div className="p-4 bg-slate-50 rounded-xl space-y-1">
+                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Ukuran File</p>
+                                <p className="font-semibold text-slate-900">{selectedReport.size}</p>
+                            </div>
+                            <div className="p-4 bg-slate-50 rounded-xl space-y-1 col-span-2">
+                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-2">Status Dokumen</p>
+                                <div className={cn(
+                                    "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border w-full",
+                                    selectedReport.status === 'Published' && "bg-green-50 text-green-700 border-green-200",
+                                    selectedReport.status === 'Review' && "bg-amber-50 text-amber-700 border-amber-200",
+                                    selectedReport.status === 'Draft' && "bg-slate-100 text-slate-600 border-slate-200",
+                                )}>
+                                    {selectedReport.status === 'Published' && <CheckCircle size={16} />}
+                                    {selectedReport.status === 'Review' && <AlertCircle size={16} />}
+                                    {selectedReport.status === 'Draft' && <Clock size={16} />}
+                                    {selectedReport.status}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* File Preview */}
+                        {selectedReport.fileData && (
+                            <div className="space-y-2">
+                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Preview File</p>
+                                <div className="w-full rounded-xl border border-slate-200 overflow-hidden bg-slate-50">
+                                    {selectedReport.fileData.startsWith('data:image') ? (
+                                        <img
+                                            src={selectedReport.fileData}
+                                            alt="Preview"
+                                            className="w-full max-h-[300px] object-contain"
+                                        />
+                                    ) : selectedReport.fileData.startsWith('data:application/pdf') ? (
+                                        <iframe
+                                            src={selectedReport.fileData}
+                                            className="w-full h-[300px]"
+                                            title="PDF Preview"
+                                        />
+                                    ) : (
+                                        <div className="h-32 flex flex-col items-center justify-center text-slate-400 gap-2">
+                                            <FileText size={32} className="opacity-50" />
+                                            <p className="text-sm">Preview tidak tersedia untuk format ini</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Actions */}
+                        <div className="pt-2 flex gap-3">
+                            <button
+                                onClick={() => setSelectedReport(null)}
+                                className="flex-1 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl hover:bg-slate-50 transition-colors"
+                            >
+                                Tutup
+                            </button>
+                            {selectedReport.fileData ? (
+                                <button
+                                    onClick={() => downloadFile(selectedReport)}
+                                    className="flex-[2] flex items-center justify-center gap-2 py-2.5 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-500/25 transition-colors"
+                                >
+                                    <Download size={18} />
+                                    Download Dokumen
+                                </button>
+                            ) : (
+                                <div className="flex-[2] py-2.5 bg-slate-100 text-slate-400 font-medium rounded-xl border border-slate-200 text-center cursor-not-allowed text-sm flex items-center justify-center gap-2">
+                                    <AlertCircle size={16} />
+                                    File Arsip Tidak Tersedia
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </Modal>
+        </div >
     )
 }

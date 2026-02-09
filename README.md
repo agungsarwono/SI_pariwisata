@@ -51,4 +51,3 @@ npm run dev
 - **Pencarian**: Command Palette (Ctrl+K) untuk navigasi cepat.
 
 ---
-Dikembangkan dengan ❤️ untuk Jepara.

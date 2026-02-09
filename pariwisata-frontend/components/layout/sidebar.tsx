@@ -103,7 +103,7 @@ export function Sidebar() {
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className={cn(
-                    "fixed left-0 top-0 h-screen flex-col bg-white border-r border-slate-200 text-slate-900 z-[50] shadow-sm",
+                    "fixed left-0 top-0 h-screen flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white z-[50] shadow-sm",
                     "md:translate-x-0 md:flex",
                     isMobile ? "shadow-2xl" : ""
                 )}
@@ -120,7 +120,7 @@ export function Sidebar() {
                             <motion.h1
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+                                className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
                             >
                                 SID-Jepara
                             </motion.h1>
@@ -138,8 +138,8 @@ export function Sidebar() {
                                 className={cn(
                                     "relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group cursor-pointer",
                                     isActive
-                                        ? "bg-blue-50 text-blue-600"
-                                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900",
+                                        ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200",
                                     isCollapsed ? "justify-center" : ""
                                 )}
                             >
@@ -147,7 +147,7 @@ export function Sidebar() {
                                     size={22}
                                     className={cn(
                                         "transition-colors duration-200",
-                                        isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"
+                                        isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
                                     )}
                                 />
 
@@ -162,7 +162,7 @@ export function Sidebar() {
                                 )}
 
                                 {isCollapsed && isActive && (
-                                    <div className="absolute right-1 top-1 w-2 h-2 rounded-full bg-blue-600" />
+                                    <div className="absolute right-1 top-1 w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-500" />
                                 )}
                             </div>
                         )
@@ -182,11 +182,11 @@ export function Sidebar() {
                 </nav>
 
                 {/* Footer / Toggle Section */}
-                <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                     <button
                         onClick={toggleCollapse}
                         className={cn(
-                            "hidden md:flex items-center justify-center w-full p-2 rounded-lg text-slate-400 hover:bg-white hover:shadow-sm hover:text-slate-600 transition-all",
+                            "hidden md:flex items-center justify-center w-full p-2 rounded-lg text-slate-400 hover:bg-white hover:shadow-sm hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300 transition-all",
                             isCollapsed ? "" : "ml-auto w-8 h-8 p-0"
                         )}
                     >
@@ -198,13 +198,13 @@ export function Sidebar() {
                     </button>
 
                     <div className={cn("flex items-center gap-3 mt-4", isCollapsed ? "justify-center" : "")}>
-                        <div className="w-9 h-9 min-w-[36px] rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-sm">
+                        <div className="w-9 h-9 min-w-[36px] rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-600 dark:text-slate-300 text-sm">
                             AD
                         </div>
                         {!isCollapsed && (
                             <div className="overflow-hidden">
-                                <p className="text-sm font-semibold text-slate-700 truncate">Admin</p>
-                                <p className="text-xs text-slate-400 truncate">admin@jepara.go.id</p>
+                                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200 truncate">Admin</p>
+                                <p className="text-xs text-slate-400 dark:text-slate-500 truncate">admin@jepara.go.id</p>
                             </div>
                         )}
                     </div>

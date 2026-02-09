@@ -48,13 +48,13 @@ export default function EventDetailPage() {
         <div className="max-w-4xl mx-auto space-y-8">
             <Link
                 href="/event"
-                className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors"
+                className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
                 <ArrowLeft size={20} />
                 Kembali ke Event
             </Link>
 
-            <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800">
                 {/* Hero Image */}
                 <div className={cn(
                     "h-64 md:h-96 w-full relative",
@@ -85,44 +85,44 @@ export default function EventDetailPage() {
                 <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-2 space-y-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900 mb-3">Tentang Event</h2>
-                            <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Tentang Event</h2>
+                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                                 {event.description || 'Tidak ada deskripsi untuk event ini.'}
                             </p>
                         </div>
                     </div>
 
                     <div className="space-y-6">
-                        <div className="bg-slate-50 p-6 rounded-2xl space-y-4">
-                            <h3 className="font-bold text-slate-900">Detail Waktu</h3>
+                        <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl space-y-4">
+                            <h3 className="font-bold text-slate-900 dark:text-white">Detail Waktu</h3>
 
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg text-blue-600 shadow-sm">
+                                <div className="p-2 bg-white dark:bg-slate-700/50 rounded-lg text-blue-600 dark:text-blue-400 shadow-sm">
                                     <Calendar size={20} />
                                 </div>
                                 <div>
-                                    <div className="text-xs text-slate-500 uppercase font-semibold">Tanggal</div>
-                                    <div className="font-medium text-slate-900">{event.date}</div>
+                                    <div className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Tanggal</div>
+                                    <div className="font-medium text-slate-900 dark:text-slate-200">{event.date}</div>
                                 </div>
                             </div>
 
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg text-blue-600 shadow-sm">
+                                <div className="p-2 bg-white dark:bg-slate-700/50 rounded-lg text-blue-600 dark:text-blue-400 shadow-sm">
                                     <Clock size={20} />
                                 </div>
                                 <div>
-                                    <div className="text-xs text-slate-500 uppercase font-semibold">Waktu</div>
-                                    <div className="font-medium text-slate-900">{event.time}</div>
+                                    <div className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Waktu</div>
+                                    <div className="font-medium text-slate-900 dark:text-slate-200">{event.time}</div>
                                 </div>
                             </div>
 
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg text-blue-600 shadow-sm">
+                                <div className="p-2 bg-white dark:bg-slate-700/50 rounded-lg text-blue-600 dark:text-blue-400 shadow-sm">
                                     <Users size={20} />
                                 </div>
                                 <div>
-                                    <div className="text-xs text-slate-500 uppercase font-semibold">Peserta</div>
-                                    <div className="font-medium text-slate-900">{event.attendees} going</div>
+                                    <div className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Peserta</div>
+                                    <div className="font-medium text-slate-900 dark:text-slate-200">{event.attendees} going</div>
                                 </div>
                             </div>
                         </div>

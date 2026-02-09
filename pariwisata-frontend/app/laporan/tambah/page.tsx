@@ -9,7 +9,16 @@ import { Toast } from '@/components/ui/custom-toast'
 
 export default function TambahLaporanPage() {
     const router = useRouter()
-    const [formData, setFormData] = useState({
+    interface FormData {
+        title: string
+        category: string
+        status: string
+        fileName?: string
+        size?: string
+        fileData?: string
+    }
+
+    const [formData, setFormData] = useState<FormData>({
         title: "",
         category: "Umum",
         status: "Draft"
@@ -56,23 +65,23 @@ export default function TambahLaporanPage() {
 
             {/* Header */}
             <div>
-                <Link href="/laporan" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-4">
+                <Link href="/laporan" className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mb-4">
                     <ArrowLeft size={18} />
                     Kembali ke Laporan
                 </Link>
-                <h1 className="text-3xl font-bold text-slate-900">Buat Laporan Baru</h1>
-                <p className="text-slate-500 mt-2">Isi formulir di bawah untuk membuat laporan baru.</p>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Buat Laporan Baru</h1>
+                <p className="text-slate-500 dark:text-slate-400 mt-2">Isi formulir di bawah untuk membuat laporan baru.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Judul Laporan</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Judul Laporan</label>
                         <input
                             type="text"
                             required
                             placeholder="Contoh: Laporan Bulanan Januari 2026"
-                            className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                            className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
                         />
@@ -80,9 +89,9 @@ export default function TambahLaporanPage() {
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700">Kategori</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Kategori</label>
                             <select
-                                className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-slate-800 dark:text-white"
                                 value={formData.category}
                                 onChange={e => setFormData({ ...formData, category: e.target.value })}
                             >
@@ -94,9 +103,9 @@ export default function TambahLaporanPage() {
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700">Status</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Status</label>
                             <select
-                                className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-slate-800 dark:text-white"
                                 value={formData.status}
                                 onChange={e => setFormData({ ...formData, status: e.target.value })}
                             >
@@ -107,9 +116,9 @@ export default function TambahLaporanPage() {
                         </div>
                     </div>
 
-                    <div className="pt-4 border-t border-slate-50">
-                        <label className="text-sm font-medium text-slate-700 mb-2 block">Upload Dokumen</label>
-                        <div className="relative border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50 hover:border-slate-300 transition-colors group cursor-pointer">
+                    <div className="pt-4 border-t border-slate-50 dark:border-slate-800">
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Upload Dokumen</label>
+                        <div className="relative border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-colors group cursor-pointer">
                             <input
                                 type="file"
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-50"
@@ -127,7 +136,6 @@ export default function TambahLaporanPage() {
                                         reader.onloadend = () => {
                                             setFormData(prev => ({
                                                 ...prev,
-                                                // @ts-ignore
                                                 fileName: file.name,
                                                 size: fileSize,
                                                 fileData: reader.result as string
@@ -137,21 +145,20 @@ export default function TambahLaporanPage() {
                                     }
                                 }}
                             />
-                            {/* @ts-ignore */}
                             {formData.fileName ? (
                                 <div className="text-center">
-                                    <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mx-auto mb-3">
                                         <FileText size={24} />
                                     </div>
-                                    <p className="text-slate-900 font-medium">{/* @ts-ignore */ formData.fileName}</p>
-                                    <p className="text-xs text-slate-500 mt-1">{/* @ts-ignore */ formData.size}</p>
-                                    <p className="text-xs text-blue-600 mt-2 font-medium">Klik untuk ganti file</p>
+                                    <p className="text-slate-900 dark:text-white font-medium">{formData.fileName}</p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{formData.size}</p>
+                                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium">Klik untuk ganti file</p>
                                 </div>
                             ) : (
                                 <div className="text-center group-hover:scale-105 transition-transform">
-                                    <Upload size={32} className="mb-2 text-slate-300 mx-auto group-hover:text-blue-500 transition-colors" />
-                                    <p className="text-sm font-medium text-slate-600">Klik untuk upload file</p>
-                                    <p className="text-xs text-slate-400 mt-1">PDF, DOCX, XLSX (Maks. 10MB)</p>
+                                    <Upload size={32} className="mb-2 text-slate-300 dark:text-slate-500 mx-auto group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" />
+                                    <p className="text-sm font-medium text-slate-600 dark:text-slate-300">Klik untuk upload file</p>
+                                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">PDF, DOCX, XLSX (Maks. 10MB)</p>
                                 </div>
                             )}
                         </div>
@@ -161,7 +168,7 @@ export default function TambahLaporanPage() {
                 <div className="flex justify-end gap-3">
                     <Link
                         href="/laporan"
-                        className="px-6 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl hover:bg-slate-50"
+                        className="px-6 py-2.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800"
                     >
                         Batal
                     </Link>

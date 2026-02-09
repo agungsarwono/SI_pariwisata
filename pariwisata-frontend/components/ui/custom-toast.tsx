@@ -57,28 +57,28 @@ export function Toast({ message, type = "success", duration = 4000, onClose }: T
                 animate="visible"
                 exit="exit"
                 variants={variants}
-                className="bg-white rounded-xl shadow-2xl border border-slate-100 p-4 min-w-[320px] relative overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-800 p-4 min-w-[320px] relative overflow-hidden"
             >
                 <div className="flex items-start gap-3">
                     {iconMap[type]}
                     <div className="flex-1">
-                        <h4 className="text-sm font-semibold text-slate-800">
+                        <h4 className="text-sm font-semibold text-slate-800 dark:text-white">
                             {type === 'success' ? 'Changes saved' : type === 'error' ? 'Error' : 'Notification'}
                         </h4>
-                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                             {message}
                         </p>
-                        <p className="text-[10px] text-slate-400 mt-2">
-                            This message will close in {Math.ceil((progress / 100) * (duration / 1000))} seconds. <button onClick={onClose} className="text-slate-700 font-medium underline">Click to stop.</button>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-2">
+                            This message will close in {Math.ceil((progress / 100) * (duration / 1000))} seconds. <button onClick={onClose} className="text-slate-700 dark:text-slate-300 font-medium underline">Click to stop.</button>
                         </p>
                     </div>
-                    <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+                    <button onClick={onClose} className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
                         <X size={16} />
                     </button>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="absolute bottom-0 left-0 h-1 bg-slate-100 w-full">
+                <div className="absolute bottom-0 left-0 h-1 bg-slate-100 dark:bg-slate-800 w-full">
                     <motion.div
                         className={`h-full ${type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'}`}
                         style={{ width: `${progress}%` }}

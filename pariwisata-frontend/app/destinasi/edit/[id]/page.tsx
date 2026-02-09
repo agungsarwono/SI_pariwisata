@@ -122,12 +122,12 @@ export default function EditDestinasiPage() {
 
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
-                <Link href="/destinasi" className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-500">
+                <Link href="/destinasi" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-500 dark:text-slate-400">
                     <ArrowLeft size={20} />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Edit Destinasi</h1>
-                    <p className="text-slate-500 text-sm">Perbarui informasi destinasi wisata.</p>
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Edit Destinasi</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Perbarui informasi destinasi wisata.</p>
                 </div>
             </div>
 
@@ -136,29 +136,29 @@ export default function EditDestinasiPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 onSubmit={handleSubmit}
-                className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-8"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 space-y-8"
             >
                 {/* General Info */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-800 border-b border-slate-50 pb-2">Informasi Umum</h2>
+                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2">Informasi Umum</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700">Nama Destinasi</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Nama Destinasi</label>
                             <input
                                 required
                                 type="text"
                                 placeholder="Contoh: Pantai Kartini"
-                                className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300"
+                                className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 dark:text-white dark:bg-slate-800 dark:placeholder-slate-500"
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700">Kategori</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Kategori</label>
                             <select
-                                className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-white"
+                                className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-white dark:bg-slate-800 dark:text-white"
                                 value={formData.category}
                                 onChange={e => setFormData({ ...formData, category: e.target.value })}
                             >
@@ -171,14 +171,14 @@ export default function EditDestinasiPage() {
                         </div>
 
                         <div className="space-y-2 md:col-span-2">
-                            <label className="text-sm font-medium text-slate-700">Lokasi Lengkap</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Lokasi Lengkap</label>
                             <div className="relative">
-                                <MapPin className="absolute left-3 top-2.5 text-slate-400" size={18} />
+                                <MapPin className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={18} />
                                 <input
                                     required
                                     type="text"
                                     placeholder="Contoh: Jl. Pantai Kartini, Bulu, Kec. Jepara"
-                                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300"
+                                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 dark:text-white dark:bg-slate-800 dark:placeholder-slate-500"
                                     value={formData.location}
                                     onChange={e => setFormData({ ...formData, location: e.target.value })}
                                 />
@@ -189,27 +189,27 @@ export default function EditDestinasiPage() {
 
                 {/* Details */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-800 border-b border-slate-50 pb-2">Detail & Deskripsi</h2>
+                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2">Detail & Deskripsi</h2>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Deskripsi Singkat</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Deskripsi Singkat</label>
                         <textarea
                             rows={4}
                             placeholder="Jelaskan daya tarik destinasi ini..."
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 resize-none"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 resize-none dark:text-white dark:bg-slate-800 dark:placeholder-slate-500"
                             value={formData.description}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Tags (Pisahkan dengan koma)</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Tags (Pisahkan dengan koma)</label>
                         <div className="relative">
-                            <Tag className="absolute left-3 top-2.5 text-slate-400" size={18} />
+                            <Tag className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={18} />
                             <input
                                 type="text"
                                 placeholder="pantai, sunset, keluarga"
-                                className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300"
+                                className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 dark:text-white dark:bg-slate-800 dark:placeholder-slate-500"
                                 value={formData.tags}
                                 onChange={e => setFormData({ ...formData, tags: e.target.value })}
                             />
@@ -219,19 +219,19 @@ export default function EditDestinasiPage() {
 
                 {/* Media Upload */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-800 border-b border-slate-50 pb-2">Foto Destinasi</h2>
+                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2">Foto Destinasi</h2>
                     <div
                         onClick={() => document.getElementById('fileInput')?.click()}
-                        className="border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer relative overflow-hidden"
+                        className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-all cursor-pointer relative overflow-hidden"
                     >
                         {imagePreview ? (
                             <img src={imagePreview} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
                         ) : (
                             <>
-                                <div className="p-3 bg-slate-100 rounded-full mb-3">
-                                    <Upload size={24} className="text-slate-500" />
+                                <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-full mb-3">
+                                    <Upload size={24} className="text-slate-500 dark:text-slate-400" />
                                 </div>
-                                <p className="font-medium text-slate-600">Klik untuk ubah foto</p>
+                                <p className="font-medium text-slate-600 dark:text-slate-300">Klik untuk ubah foto</p>
                                 <p className="text-xs">PNG, JPG up to 5MB</p>
                             </>
                         )}
@@ -255,10 +255,10 @@ export default function EditDestinasiPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-50">
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-50 dark:border-slate-800">
                     <Link
                         href="/destinasi"
-                        className="px-6 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl hover:bg-slate-50 transition-colors"
+                        className="px-6 py-2.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                     >
                         Batal
                     </Link>

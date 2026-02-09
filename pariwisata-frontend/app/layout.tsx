@@ -12,23 +12,32 @@ export const metadata: Metadata = {
   description: "Dashboard Manajemen Pariwisata Jepara",
 };
 
+import { ThemeProvider } from "@/components/theme-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-slate-50 text-slate-900`}>
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <ClientLayoutWrapper>
-            <Header />
-            <main className="flex-1 p-6 overflow-x-hidden">
-              {children}
-            </main>
-          </ClientLayoutWrapper>
-        </div>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} bg-background text-foreground transition-colors duration-300`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <ClientLayoutWrapper>
+              <Header />
+              <main className="flex-1 p-6 overflow-x-hidden">
+                {children}
+              </main>
+            </ClientLayoutWrapper>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

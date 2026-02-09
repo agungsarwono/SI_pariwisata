@@ -189,22 +189,22 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: -20 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed top-[15%] left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-2xl z-[10000] overflow-hidden flex flex-col border border-slate-100"
+                        className="fixed top-[15%] left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl z-[10000] overflow-hidden flex flex-col border border-slate-100 dark:border-slate-800"
                     >
                         {/* Header / Input */}
-                        <div className="flex items-center px-4 py-4 border-b border-slate-100 bg-white">
+                        <div className="flex items-center px-4 py-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
                             <Search className="text-slate-400 mr-3" size={20} />
                             <input
                                 autoFocus
                                 type="text"
                                 placeholder={isLoading ? "Loading data..." : "Search for files, users, and more..."}
-                                className="flex-1 bg-transparent outline-none text-lg text-slate-700 placeholder:text-slate-400"
+                                className="flex-1 bg-transparent outline-none text-lg text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-medium text-slate-400 border border-slate-200 rounded px-1.5 py-0.5">⌘ + K</span>
-                                <button onClick={onClose} className="p-1 hover:bg-slate-100 rounded-md transition-colors text-slate-400">
+                                <span className="text-xs font-medium text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded px-1.5 py-0.5">⌘ + K</span>
+                                <button onClick={onClose} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-colors text-slate-400 dark:text-slate-500">
                                     <X size={18} />
                                 </button>
                             </div>
@@ -216,7 +216,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                             {/* Recent Search (Only show if no search term) */}
                             {search === "" && (
                                 <div className="mb-4">
-                                    <h4 className="text-xs font-semibold text-slate-400 px-3 py-2">Recent Search</h4>
+                                    <h4 className="text-xs font-semibold text-slate-400 dark:text-slate-500 px-3 py-2">Recent Search</h4>
                                     {recentItems.map((item, index) => {
                                         const globalIndex = index
                                         const isSelected = selectedIndex === globalIndex
@@ -226,16 +226,16 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                                                 onClick={() => handleSelect(item)}
                                                 className={cn(
                                                     "flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer transition-colors group",
-                                                    isSelected ? "bg-slate-100" : "hover:bg-slate-50"
+                                                    isSelected ? "bg-slate-100 dark:bg-slate-800" : "hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                                 )}
                                             >
                                                 <div className="flex items-center">
-                                                    <Clock size={16} className="text-slate-400 mr-3" />
-                                                    <span className="text-slate-700 font-medium">{item.label}</span>
+                                                    <Clock size={16} className="text-slate-400 dark:text-slate-500 mr-3" />
+                                                    <span className="text-slate-700 dark:text-slate-300 font-medium">{item.label}</span>
                                                 </div>
                                                 <button
                                                     onClick={(e) => removeRecent(e, item.id)}
-                                                    className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
+                                                    className="p-1 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -248,7 +248,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                             {/* Files */}
                             <div className="mb-4">
                                 <div className="flex items-center justify-between px-3 py-2">
-                                    <h4 className="text-xs font-semibold text-slate-400">File</h4>
+                                    <h4 className="text-xs font-semibold text-slate-400 dark:text-slate-500">File</h4>
                                 </div>
                                 {filteredFiles.map((item, index) => {
                                     const globalIndex = (search === "" ? recentItems.length : 0) + index
@@ -259,18 +259,18 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                                             onClick={() => handleSelect(item)}
                                             className={cn(
                                                 "flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer transition-colors group",
-                                                isSelected ? "bg-slate-100" : "hover:bg-slate-50"
+                                                isSelected ? "bg-slate-100 dark:bg-slate-800" : "hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
-                                                <div className="p-2 bg-slate-100 rounded-lg text-slate-500 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                                <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400 group-hover:bg-white dark:group-hover:bg-slate-700 group-hover:shadow-sm transition-all">
                                                     <FileText size={18} />
                                                 </div>
                                                 <div>
-                                                    <span className="text-slate-900 font-medium block">{item.label}</span>
+                                                    <span className="text-slate-900 dark:text-slate-200 font-medium block">{item.label}</span>
                                                     <div className="flex gap-2 mt-1">
                                                         {item.tags?.map((tag: string) => (
-                                                            <span key={tag} className="text-[10px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                                            <span key={tag} className="text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-1.5 py-0.5 rounded flex items-center gap-1">
                                                                 <Hash size={8} /> {tag}
                                                             </span>
                                                         ))}
@@ -280,15 +280,15 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center -space-x-2">
                                                     {[...Array(item.users)].map((_, i) => (
-                                                        <div key={i} className={`w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-bold text-white ${['bg-red-400', 'bg-blue-400', 'bg-amber-400'][i % 3]}`}>
+                                                        <div key={i} className={`w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center text-[8px] font-bold text-white ${['bg-red-400', 'bg-blue-400', 'bg-amber-400'][i % 3]}`}>
                                                             {String.fromCharCode(65 + i)}
                                                         </div>
                                                     ))}
-                                                    <span className="text-xs text-slate-400 ml-3">+{item.users} people</span>
+                                                    <span className="text-xs text-slate-400 dark:text-slate-500 ml-3">+{item.users} people</span>
                                                 </div>
                                                 <button
                                                     onClick={(e) => removeFile(e, item.id)}
-                                                    className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
+                                                    className="p-1 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -300,7 +300,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
                             {/* Users */}
                             <div className="mb-2">
-                                <h4 className="text-xs font-semibold text-slate-400 px-3 py-2">User</h4>
+                                <h4 className="text-xs font-semibold text-slate-400 dark:text-slate-500 px-3 py-2">User</h4>
                                 {filteredUsers.map((item, index) => {
                                     const globalIndex = (search === "" ? recentItems.length : 0) + filteredFiles.length + index
                                     const isSelected = selectedIndex === globalIndex
@@ -310,7 +310,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                                             onClick={() => handleSelect(item)}
                                             className={cn(
                                                 "flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer transition-colors group",
-                                                isSelected ? "bg-slate-100" : "hover:bg-slate-50"
+                                                isSelected ? "bg-slate-100 dark:bg-slate-800" : "hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
@@ -318,18 +318,18 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                                                     {item.name.substring(0, 2).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <span className="text-slate-900 font-medium block">{item.name}</span>
+                                                    <span className="text-slate-900 dark:text-slate-200 font-medium block">{item.name}</span>
                                                     <span className="text-xs text-blue-500 block">{item.handle}</span>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-4">
-                                                <div className="flex items-center gap-2 text-slate-400 text-xs">
+                                                <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs">
                                                     <MapPinIcon size={12} />
                                                     {item.location}
                                                 </div>
                                                 <button
                                                     onClick={(e) => removeUser(e, item.id)}
-                                                    className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
+                                                    className="p-1 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -341,20 +341,20 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                         </div>
 
                         {/* Footer */}
-                        <div className="px-4 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <div className="px-4 py-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-1">
-                                    <span className="bg-white border border-slate-200 rounded px-1 py-0.5 shadow-sm"><CornerDownLeft size={10} /></span>
+                                    <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-1 py-0.5 shadow-sm"><CornerDownLeft size={10} /></span>
                                     <span>Enter</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <span className="bg-white border border-slate-200 rounded px-1 py-0.5 shadow-sm"><ArrowUp size={10} /></span>
-                                    <span className="bg-white border border-slate-200 rounded px-1 py-0.5 shadow-sm"><ArrowDown size={10} /></span>
+                                    <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-1 py-0.5 shadow-sm"><ArrowUp size={10} /></span>
+                                    <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-1 py-0.5 shadow-sm"><ArrowDown size={10} /></span>
                                     <span>Select</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1">
-                                <span className="bg-white border border-slate-200 rounded px-1 py-0.5 shadow-sm">Esc</span>
+                                <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-1 py-0.5 shadow-sm">Esc</span>
                                 <span>Exit</span>
                             </div>
                         </div>

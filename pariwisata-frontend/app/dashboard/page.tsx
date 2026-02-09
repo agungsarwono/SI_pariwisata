@@ -106,8 +106,8 @@ export default function DashboardPage() {
         <div className="space-y-8">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
-                <p className="text-slate-500 mt-2">Selamat datang kembali, berikut ringkasan statistik pariwisata Jepara.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Dashboard Overview</h1>
+                <p className="text-slate-500 dark:text-slate-400 mt-2">Selamat datang kembali, berikut ringkasan statistik pariwisata Jepara.</p>
             </div>
 
             {/* Stats Cards */}
@@ -122,23 +122,23 @@ export default function DashboardPage() {
                         key={i}
                         variants={item}
                         whileHover={{ y: -4 }}
-                        className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100"
+                        className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100 dark:border-slate-800"
                     >
                         <div className="flex justify-between items-start mb-4">
-                            <div className={cn("p-3 rounded-xl", stat.iconBg)}>
+                            <div className={cn("p-3 rounded-xl", stat.iconBg, "dark:bg-opacity-20")}>
                                 <stat.icon size={24} />
                             </div>
                             <div className={cn(
                                 "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full",
-                                "text-green-600 bg-green-50"
+                                "text-green-600 bg-green-50 dark:bg-green-900/30 dark:text-green-400"
                             )}>
                                 {stat.increase ? <ArrowUp size={12} /> : <ArrowDown size={12} />}
                                 {stat.change}
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-3xl font-bold text-slate-900">{stat.value}</h3>
-                            <p className="text-sm text-slate-500 font-medium mt-1">{stat.label}</p>
+                            <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</h3>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">{stat.label}</p>
                         </div>
                     </motion.div>
                 ))}
@@ -151,9 +151,9 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
+                    className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800"
                 >
-                    <h3 className="text-lg font-bold text-slate-900 mb-6">Tren Pengunjung</h3>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Tren Pengunjung</h3>
                     <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={visitorData}>
@@ -163,7 +163,7 @@ export default function DashboardPage() {
                                         <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f1f5f9" />
+                                <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f1f5f9" className="dark:stroke-slate-800" />
                                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
                                 <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                                 <Tooltip
@@ -188,15 +188,15 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
+                    className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800"
                 >
-                    <h3 className="text-lg font-bold text-slate-900 mb-6">Destinasi Terpopuler</h3>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Destinasi Terpopuler</h3>
                     <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart layout="vertical" data={topDestinations}>
-                                <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#f1f5f9" />
+                                <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#f1f5f9" className="dark:stroke-slate-800" />
                                 <XAxis type="number" hide />
-                                <YAxis dataKey="name" type="category" width={120} axisLine={false} tickLine={false} tick={{ fill: '#0f172a', fontWeight: 500, fontSize: 13 }} />
+                                <YAxis dataKey="name" type="category" width={120} axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontWeight: 500, fontSize: 13 }} className="dark:fill-slate-400" />
                                 <Tooltip
                                     cursor={{ fill: '#f8fafc' }}
                                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
@@ -213,26 +213,26 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden"
             >
-                <div className="p-6 border-b border-slate-100">
-                    <h3 className="text-lg font-bold text-slate-900">Aktivitas Terkini</h3>
+                <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Aktivitas Terkini</h3>
                 </div>
-                <div className="divide-y divide-slate-50">
+                <div className="divide-y divide-slate-50 dark:divide-slate-800">
                     {recentActivities.map((activity) => (
-                        <div key={activity.id} className="p-4 hover:bg-slate-50 transition-colors flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                        <div key={activity.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400">
                                 <activity.icon size={18} />
                             </div>
                             <div className="flex-1">
-                                <p className="text-sm font-medium text-slate-900">
-                                    <span className="font-bold">{activity.user}</span> {activity.action} <span className="text-blue-600">{activity.target}</span>
+                                <p className="text-sm font-medium text-slate-900 dark:text-slate-200">
+                                    <span className="font-bold">{activity.user}</span> {activity.action} <span className="text-blue-600 dark:text-blue-400">{activity.target}</span>
                                 </p>
-                                <p className="text-xs text-slate-500 mt-0.5">{activity.time}</p>
+                                <p className="text-xs text-slate-500 dark:text-slate-500 mt-0.5">{activity.time}</p>
                             </div>
                             <button
                                 onClick={() => setSelectedActivity(activity)}
-                                className="text-xs font-medium text-slate-400 hover:text-slate-900"
+                                className="text-xs font-medium text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
                             >
                                 Details
                             </button>

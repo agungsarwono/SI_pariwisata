@@ -232,8 +232,8 @@ export default function DestinasiPage() {
             {/* Page Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Kelola Destinasi</h1>
-                    <p className="text-slate-500 mt-1">Manajemen data lokasi wisata di Jepara.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Kelola Destinasi</h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-1">Manajemen data lokasi wisata di Jepara.</p>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -241,7 +241,7 @@ export default function DestinasiPage() {
                     <div className="relative" onClick={e => e.stopPropagation()}>
                         <button
                             onClick={() => setActiveDropdown(activeDropdown === 'filter' ? null : 'filter')}
-                            className={`flex items-center gap-2 px-4 py-2 border rounded-xl transition-colors font-medium text-sm ${filterCategory !== 'Semua' ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'}`}
+                            className={`flex items-center gap-2 px-4 py-2 border rounded-xl transition-colors font-medium text-sm ${filterCategory !== 'Semua' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                         >
                             <Filter size={16} />
                             {filterCategory === 'Semua' ? 'Filter' : filterCategory}
@@ -253,7 +253,7 @@ export default function DestinasiPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full mt-2 right-0 w-48 bg-white rounded-xl shadow-xl border border-slate-100 p-2 z-50"
+                                    className="absolute top-full mt-2 right-0 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 p-2 z-50"
                                 >
                                     {["Semua", "Alam", "Bahari", "Sejarah", "Religi", "Kuliner", "Hotel"].map((cat) => (
                                         <button
@@ -262,7 +262,7 @@ export default function DestinasiPage() {
                                                 setFilterCategory(cat)
                                                 setActiveDropdown(null)
                                             }}
-                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${filterCategory === cat ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${filterCategory === cat ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                                         >
                                             {cat}
                                         </button>
@@ -276,7 +276,7 @@ export default function DestinasiPage() {
                     <div className="relative" onClick={e => e.stopPropagation()}>
                         <button
                             onClick={() => setActiveDropdown(activeDropdown === 'sort' ? null : 'sort')}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-colors font-medium text-sm"
+                            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium text-sm"
                         >
                             <ArrowUpDown size={16} />
                             Sort
@@ -288,7 +288,7 @@ export default function DestinasiPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full mt-2 right-0 w-56 bg-white rounded-xl shadow-xl border border-slate-100 p-2 z-50"
+                                    className="absolute top-full mt-2 right-0 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 p-2 z-50"
                                 >
                                     {[
                                         { label: "Terbaru", value: "terbaru" },
@@ -303,7 +303,7 @@ export default function DestinasiPage() {
                                                 setSortBy(opt.value)
                                                 setActiveDropdown(null)
                                             }}
-                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${sortBy === opt.value ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${sortBy === opt.value ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                                         >
                                             {opt.label}
                                         </button>
@@ -331,7 +331,7 @@ export default function DestinasiPage() {
                     <motion.div
                         key={dest.id}
                         variants={item}
-                        className="group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 relative"
+                        className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 relative"
                     >
                         <Link href={dest.href || '#'} className="block h-full">
                             {/* Image Section */}
@@ -357,22 +357,22 @@ export default function DestinasiPage() {
                             {/* Content Section */}
                             <div className="p-5 pb-16">
                                 <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
                                         {dest.label}
                                     </h3>
                                 </div>
 
-                                <div className="flex items-center gap-1 text-slate-500 text-sm mb-4">
-                                    <MapPin size={14} className="text-slate-400" />
+                                <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-sm mb-4">
+                                    <MapPin size={14} className="text-slate-400 dark:text-slate-500" />
                                     {dest.location || 'Jepara, Jawa Tengah'}
                                 </div>
 
-                                <div className="flex items-center gap-4 border-t border-slate-50 pt-4">
-                                    <div className="flex items-center gap-1 font-bold text-slate-700 text-sm">
+                                <div className="flex items-center gap-4 border-t border-slate-50 dark:border-slate-800 pt-4">
+                                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300 text-sm">
                                         <Star size={14} className="text-amber-400 fill-amber-400" />
                                         4.5
                                     </div>
-                                    <div className="flex items-center gap-1 text-slate-400 text-xs">
+                                    <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500 text-xs">
                                         <Eye size={14} />
                                         {dest.users}k
                                     </div>
@@ -385,7 +385,7 @@ export default function DestinasiPage() {
                             <Link
                                 href={`/destinasi/edit/${dest.id}`}
                                 onClick={(e) => { e.stopPropagation(); }}
-                                className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors z-10"
+                                className="p-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors z-10"
                             >
                                 <Edit size={16} />
                             </Link>
@@ -395,7 +395,7 @@ export default function DestinasiPage() {
                                     e.stopPropagation();
                                     handleDelete(dest.id, dest.label)
                                 }}
-                                className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors z-10"
+                                className="p-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400 transition-colors z-10"
                             >
                                 <Trash2 size={16} />
                             </button>

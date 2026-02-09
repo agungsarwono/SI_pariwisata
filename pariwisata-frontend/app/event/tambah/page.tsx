@@ -82,26 +82,26 @@ export default function AddEventPage() {
             <div className="mb-6">
                 <Link
                     href="/event"
-                    className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-4"
+                    className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mb-4"
                 >
                     <ArrowLeft size={20} />
                     Kembali ke Event
                 </Link>
-                <h1 className="text-3xl font-bold text-slate-900">Buat Event Baru</h1>
-                <p className="text-slate-500 mt-1">Tambahkan jadwal acara pariwisata atau kebudayaan baru.</p>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Buat Event Baru</h1>
+                <p className="text-slate-500 dark:text-slate-400 mt-1">Tambahkan jadwal acara pariwisata atau kebudayaan baru.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Left Column: Image Upload */}
                     <div className="space-y-4">
-                        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                            <label className="block text-sm font-medium text-slate-700">Cover Event</label>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Cover Event</label>
 
                             <div className="relative group">
                                 <div className={cn(
-                                    "w-full h-64 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center bg-slate-50 transition-all overflow-hidden",
-                                    !formData.image && "hover:border-blue-500 hover:bg-blue-50"
+                                    "w-full h-64 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-800 transition-all overflow-hidden",
+                                    !formData.image && "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700/50"
                                 )}>
                                     {formData.image ? (
                                         <img
@@ -111,11 +111,11 @@ export default function AddEventPage() {
                                         />
                                     ) : (
                                         <div className="text-center p-6">
-                                            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-3">
                                                 <Upload size={24} />
                                             </div>
-                                            <p className="text-sm font-medium text-slate-700">Klik untuk upload gambar</p>
-                                            <p className="text-xs text-slate-500 mt-1">PNG, JPG up to 5MB</p>
+                                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Klik untuk upload gambar</p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">PNG, JPG up to 5MB</p>
                                         </div>
                                     )}
 
@@ -129,33 +129,33 @@ export default function AddEventPage() {
                             </div>
                         </div>
 
-                        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                            <label className="block text-sm font-medium text-slate-700">Waktu & Tempat</label>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Waktu & Tempat</label>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-semibold text-slate-500 uppercase">Tanggal</label>
+                                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Tanggal</label>
                                     <div className="relative">
-                                        <Calendar size={16} className="absolute left-3 top-3 text-slate-400" />
+                                        <Calendar size={16} className="absolute left-3 top-3 text-slate-400 dark:text-slate-500" />
                                         <input
                                             type="date"
                                             value={formData.date}
                                             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                            className="w-full pl-9 pr-4 py-2 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm text-slate-600"
+                                            className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-transparent rounded-lg focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm text-slate-600 dark:text-slate-200"
                                             required
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-semibold text-slate-500 uppercase">Jam</label>
+                                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Jam</label>
                                     <div className="relative">
-                                        <Clock size={16} className="absolute left-3 top-3 text-slate-400" />
+                                        <Clock size={16} className="absolute left-3 top-3 text-slate-400 dark:text-slate-500" />
                                         <input
                                             type="text"
                                             placeholder="08:00 - 14:00"
                                             value={formData.time}
                                             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                                            className="w-full pl-9 pr-4 py-2 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm"
+                                            className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-transparent rounded-lg focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm dark:text-white dark:placeholder-slate-500"
                                             required
                                         />
                                     </div>
@@ -163,15 +163,15 @@ export default function AddEventPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Lokasi</label>
+                                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Lokasi</label>
                                 <div className="relative">
-                                    <MapPin size={16} className="absolute left-3 top-3 text-slate-400" />
+                                    <MapPin size={16} className="absolute left-3 top-3 text-slate-400 dark:text-slate-500" />
                                     <input
                                         type="text"
                                         placeholder="Lokasi event..."
                                         value={formData.location}
                                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm"
+                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-transparent rounded-lg focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm dark:text-white dark:placeholder-slate-500"
                                         required
                                     />
                                 </div>
@@ -180,24 +180,24 @@ export default function AddEventPage() {
                     </div>
 
                     {/* Right Column: Details */}
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
                         <div className="space-y-4">
-                            <label className="block text-sm font-medium text-slate-700">Detail Event</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Detail Event</label>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Nama Event</label>
+                                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Nama Event</label>
                                 <input
                                     type="text"
                                     placeholder="Masukkan nama event..."
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-2 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm"
+                                    className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-transparent rounded-lg focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm dark:text-white dark:placeholder-slate-500"
                                     required
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Kategori</label>
+                                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Kategori</label>
                                 <div className="grid grid-cols-3 gap-2">
                                     {['Budaya', 'Musik', 'Pameran'].map((cat) => (
                                         <button
@@ -207,8 +207,8 @@ export default function AddEventPage() {
                                             className={cn(
                                                 "py-2 text-xs font-medium rounded-lg border transition-all",
                                                 formData.category === cat
-                                                    ? "bg-blue-50 text-blue-600 border-blue-200"
-                                                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                                                    ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800"
+                                                    : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
                                             )}
                                         >
                                             {cat}
@@ -218,21 +218,21 @@ export default function AddEventPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Deskripsi</label>
+                                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Deskripsi</label>
                                 <textarea
                                     rows={5}
                                     placeholder="Jelaskan detail acara..."
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 border-transparent rounded-lg focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm resize-none"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-transparent rounded-lg focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-sm resize-none dark:text-white dark:placeholder-slate-500"
                                 />
                             </div>
                         </div>
 
-                        <div className="pt-4 border-t border-slate-100 flex gap-3">
+                        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
                             <Link
                                 href="/event"
-                                className="flex-1 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl hover:bg-slate-50 transition-colors text-center text-sm"
+                                className="flex-1 py-2.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-center text-sm"
                             >
                                 Batal
                             </Link>

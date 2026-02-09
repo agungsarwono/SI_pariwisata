@@ -46,8 +46,8 @@ export default function DestinationDetailPage() {
     if (error || !destination) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-                <h1 className="text-2xl font-bold text-slate-800">Destinasi Tidak Ditemukan</h1>
-                <p className="text-slate-500">Halaman yang Anda cari mungkin sudah dihapus atau slug salah.</p>
+                <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Destinasi Tidak Ditemukan</h1>
+                <p className="text-slate-500 dark:text-slate-400">Halaman yang Anda cari mungkin sudah dihapus atau slug salah.</p>
                 <Link href="/dashboard" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     Kembali ke Dashboard
                 </Link>
@@ -58,22 +58,22 @@ export default function DestinationDetailPage() {
     return (
         <div className="space-y-6">
             {/* Header / Breadcrumb */}
-            <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Link href="/dashboard" className="hover:text-blue-600">Dashboard</Link>
+            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                <Link href="/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400">Dashboard</Link>
                 <span>/</span>
-                <Link href="/destinasi" className="hover:text-blue-600">Destinasi</Link>
+                <Link href="/destinasi" className="hover:text-blue-600 dark:hover:text-blue-400">Destinasi</Link>
                 <span>/</span>
-                <span className="text-slate-800 font-medium">{destination.label}</span>
+                <span className="text-slate-800 dark:text-slate-200 font-medium">{destination.label}</span>
             </div>
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden"
             >
                 {/* Hero / Cover Image Placeholder */}
-                <div className="h-64 bg-slate-100 w-full relative overflow-hidden">
+                <div className="h-64 bg-slate-100 dark:bg-slate-800 w-full relative overflow-hidden">
                     {destination.image ? (
                         <img
                             src={destination.image}
@@ -81,7 +81,7 @@ export default function DestinationDetailPage() {
                             className="w-full h-full object-cover"
                         />
                     ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                        <div className="absolute inset-0 flex items-center justify-center text-slate-400 dark:text-slate-500">
                             Topography / Image Placeholder
                         </div>
                     )}
@@ -90,8 +90,8 @@ export default function DestinationDetailPage() {
                 <div className="p-8">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold text-slate-900 mb-2">{destination.label}</h1>
-                            <div className="flex items-center gap-4 text-slate-500 text-sm">
+                            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{destination.label}</h1>
+                            <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400 text-sm">
                                 <div className="flex items-center gap-1">
                                     <MapPin size={16} />
                                     Jepara, Jawa Tengah
@@ -104,16 +104,16 @@ export default function DestinationDetailPage() {
                         </div>
                         <div className="flex gap-2">
                             {destination.tags?.map((tag: string) => (
-                                <span key={tag} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full uppercase tracking-wide">
+                                <span key={tag} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold rounded-full uppercase tracking-wide">
                                     {tag}
                                 </span>
                             ))}
                         </div>
                     </div>
 
-                    <div className="mt-8 border-t border-slate-100 pt-8">
-                        <h2 className="text-lg font-semibold text-slate-800 mb-4">About Destination</h2>
-                        <p className="text-slate-600 leading-relaxed max-w-4xl">
+                    <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-8">
+                        <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-4">About Destination</h2>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
                             {destination.description || "Belum ada deskripsi untuk destinasi ini."}
                         </p>
                     </div>

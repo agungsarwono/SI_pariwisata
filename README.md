@@ -49,5 +49,6 @@ npm run dev
 - **Event & Budaya**: Kalender event dinamis dengan fitur highlight otomatis.
 - **Laporan**: Unduh dan kelola laporan bulanan.
 - **Pencarian**: Command Palette (Ctrl+K) untuk navigasi cepat.
+- **Dark Mode**: Dukungan penuh untuk mode gelap/terang (Light/Dark Theme) di seluruh aplikasi.
 
 ---

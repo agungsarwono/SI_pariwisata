@@ -47,6 +47,78 @@ const dbReports: Report[] = [
     { id: 'RPT-004', title: 'Laporan Insiden Keamanan - Karimunjawa', category: 'Insiden', date: '12 Jan 2026', author: 'Security Team', status: 'Published', size: '850 KB' },
     { id: 'RPT-005', title: 'Proposal Pengembangan Fasilitas Museum', category: 'Perencanaan', date: '05 Jan 2026', author: 'Dinas Pariwisata', status: 'Review', size: '5.6 MB' },
     { id: 'RPT-006', title: 'Rekapitulasi Event Budaya 2025', category: 'Event', date: '02 Jan 2026', author: 'Event Organizer', status: 'Published', size: '3.1 MB' },
+
+]
+
+interface Event {
+    id: string
+    title: string
+    date: string
+    time: string
+    location: string
+    category: string
+    attendees: string
+    status: 'Upcoming' | 'Past'
+    image: string
+    description?: string
+}
+
+const dbEvents: Event[] = [
+    {
+        id: 'e1',
+        title: 'Pesta Lomban Kupat',
+        date: '20 Apr 2026',
+        time: '08:00 - 14:00',
+        location: 'Pantai Kartini',
+        category: 'Budaya',
+        attendees: '12K+',
+        status: 'Upcoming',
+        image: 'from-blue-500 to-indigo-500'
+    },
+    {
+        id: 'e2',
+        title: 'Jepara Jazz Festival',
+        date: '15 May 2026',
+        time: '19:00 - 23:00',
+        location: 'Alun-Alun Jepara',
+        category: 'Musik',
+        attendees: '5K+',
+        status: 'Upcoming',
+        image: 'from-purple-500 to-pink-500'
+    },
+    {
+        id: 'e3',
+        title: 'Festival Ukir Internasional',
+        date: '10 Jun 2026',
+        time: '09:00 - 17:00',
+        location: 'Sentra Ukir Mulyoharjo',
+        category: 'Pameran',
+        attendees: '3K+',
+        status: 'Upcoming',
+        image: 'from-amber-500 to-orange-500'
+    },
+    {
+        id: 'e4',
+        title: 'Baratan Ratu Kalinyamat',
+        date: '25 Mar 2026',
+        time: '18:30 - 21:00',
+        location: 'Kalinyamatan',
+        category: 'Budaya',
+        attendees: '8K+',
+        status: 'Past',
+        image: 'from-emerald-500 to-teal-500'
+    },
+    {
+        id: 'e5',
+        title: 'Karimunjawa Culture Night',
+        date: '05 Jul 2026',
+        time: '19:00 - 22:00',
+        location: 'Karimunjawa',
+        category: 'Budaya',
+        attendees: '2K+',
+        status: 'Upcoming',
+        image: 'from-cyan-500 to-blue-500'
+    }
 ]
 
 app.get('/', (c) => {
@@ -87,7 +159,7 @@ app.post('/destinasi', async (c) => {
             return c.json({ error: 'Title is required' }, 400)
         }
 
-        const newId = `d${dbDestinations.length + 1}`
+        const newId = `d${Date.now()}`
         const slug = body.title.toLowerCase().replace(/\s+/g, '-')
         const href = `/destinasi/${slug}`
 
@@ -177,7 +249,7 @@ app.post('/laporan', async (c) => {
         if (!body.title) return c.json({ error: 'Title required' }, 400)
 
         const newReport: Report = {
-            id: `RPT-${String(dbReports.length + 1).padStart(3, '0')}`,
+            id: `RPT-${Date.now()}`,
             title: body.title,
             category: body.category || 'Umum',
             date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -200,6 +272,52 @@ app.delete('/laporan/:id', (c) => {
     if (index === -1) return c.json({ error: 'Not found' }, 404)
 
     const deleted = dbReports.splice(index, 1)
+    return c.json({ message: 'Deleted', data: deleted[0] })
+})
+
+// Event Endpoints
+app.get('/events', (c) => {
+    return c.json(dbEvents)
+})
+
+app.get('/events/:id', (c) => {
+    const id = c.req.param('id')
+    const event = dbEvents.find(e => e.id === id)
+    if (!event) return c.json({ error: 'Event not found' }, 404)
+    return c.json(event)
+})
+
+app.post('/events', async (c) => {
+    try {
+        const body = await c.req.json()
+        if (!body.title) return c.json({ error: 'Title required' }, 400)
+
+        const newEvent: Event = {
+            id: `e${Date.now()}`,
+            title: body.title,
+            date: body.date,
+            time: body.time,
+            location: body.location,
+            category: body.category || 'Umum',
+            attendees: '0',
+            status: 'Upcoming',
+            image: body.image || 'from-blue-500 to-indigo-500', // Default gradient
+            description: body.description
+        }
+
+        dbEvents.unshift(newEvent)
+        return c.json({ message: 'Event created', data: newEvent }, 201)
+    } catch (e) {
+        return c.json({ error: 'Invalid JSON' }, 400)
+    }
+})
+
+app.delete('/events/:id', (c) => {
+    const id = c.req.param('id')
+    const index = dbEvents.findIndex(e => e.id === id)
+    if (index === -1) return c.json({ error: 'Not found' }, 404)
+
+    const deleted = dbEvents.splice(index, 1)
     return c.json({ message: 'Deleted', data: deleted[0] })
 })
 

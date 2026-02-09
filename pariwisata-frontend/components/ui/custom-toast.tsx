@@ -21,17 +21,20 @@ export function Toast({ message, type = "success", duration = 4000, onClose }: T
 
         const timer = setInterval(() => {
             setProgress((prev) => {
-                if (prev <= 0) {
-                    clearInterval(timer)
-                    onClose()
-                    return 0
-                }
+                if (prev <= 0) return 0
                 return prev - step
             })
         }, intervalTime)
 
         return () => clearInterval(timer)
-    }, [duration, onClose])
+    }, [duration])
+
+    // Close when progress hits 0
+    useEffect(() => {
+        if (progress <= 0) {
+            onClose()
+        }
+    }, [progress, onClose])
 
     const variants = {
         hidden: { opacity: 0, y: -20, scale: 0.95 },

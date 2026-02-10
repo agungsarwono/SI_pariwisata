@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Save, Upload, MapPin, Tag } from "lucide-react"
+import { ArrowLeft, Save, Upload, MapPin, Tag, Users } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Toast } from "@/components/ui/custom-toast"
@@ -14,7 +14,8 @@ export default function TambahDestinasiPage() {
         category: "Bahari",
         location: "",
         description: "",
-        tags: ""
+        tags: "",
+        visitors: ""
     })
     const [imagePreview, setImagePreview] = useState<string | null>(null)
 
@@ -37,10 +38,17 @@ export default function TambahDestinasiPage() {
         setIsSubmitting(true)
 
         try {
+            // Convert visitors to number
+            const payload = {
+                ...formData,
+                users: parseInt(formData.visitors) || 0,
+                image: imagePreview
+            }
+
             const res = await fetch('http://localhost:4000/destinasi', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...formData, image: imagePreview })
+                body: JSON.stringify(payload)
             })
 
             if (res.ok) {
@@ -125,7 +133,23 @@ export default function TambahDestinasiPage() {
                             </select>
                         </div>
 
-                        <div className="space-y-2 md:col-span-2">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Rata-rata Pengunjung (Bulanan)</label>
+                            <div className="relative">
+                                <Users className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={18} />
+                                <input
+                                    required
+                                    type="number"
+                                    min="0"
+                                    placeholder="0"
+                                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
+                                    value={formData.visitors}
+                                    onChange={e => setFormData({ ...formData, visitors: e.target.value })}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Lokasi Lengkap</label>
                             <div className="relative">
                                 <MapPin className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={18} />

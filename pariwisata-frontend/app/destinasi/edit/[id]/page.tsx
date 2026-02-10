@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Save, Upload, MapPin, Tag } from "lucide-react"
+import { ArrowLeft, Save, Upload, MapPin, Tag, Users } from "lucide-react"
 import Link from "next/link"
 import { useRouter, useParams } from "next/navigation"
 import { Toast } from "@/components/ui/custom-toast"
@@ -17,7 +17,8 @@ export default function EditDestinasiPage() {
         category: "Bahari",
         location: "",
         description: "",
-        tags: ""
+        tags: "",
+        visitors: ""
     })
     const [imagePreview, setImagePreview] = useState<string | null>(null)
 
@@ -51,7 +52,8 @@ export default function EditDestinasiPage() {
                         category: data.category || "Bahari",
                         location: data.location || "",
                         description: data.description || "",
-                        tags: data.tags?.join(", ") || ""
+                        tags: data.tags?.join(", ") || "",
+                        visitors: data.users?.toString() || "0"
                     })
                     if (data.image) {
                         setImagePreview(data.image)
@@ -74,10 +76,16 @@ export default function EditDestinasiPage() {
         setIsSubmitting(true)
 
         try {
+            const payload = {
+                ...formData,
+                users: parseInt(formData.visitors) || 0,
+                image: imagePreview
+            }
+
             const res = await fetch(`http://localhost:4000/destinasi/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...formData, image: imagePreview })
+                body: JSON.stringify(payload)
             })
 
             if (res.ok) {
@@ -168,6 +176,22 @@ export default function EditDestinasiPage() {
                                 <option value="Kuliner">Kuliner</option>
                                 <option value="Religi">Religi</option>
                             </select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Rata-rata Pengunjung (Bulanan)</label>
+                            <div className="relative">
+                                <Users className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={18} />
+                                <input
+                                    required
+                                    type="number"
+                                    min="0"
+                                    placeholder="0"
+                                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-300 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
+                                    value={formData.visitors}
+                                    onChange={e => setFormData({ ...formData, visitors: e.target.value })}
+                                />
+                            </div>
                         </div>
 
                         <div className="space-y-2 md:col-span-2">

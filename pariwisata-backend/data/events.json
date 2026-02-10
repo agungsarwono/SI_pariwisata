@@ -1,0 +1,57 @@
+[
+    {
+        "id": "e1",
+        "title": "Pesta Lomban Kupat",
+        "date": "20 Apr 2026",
+        "time": "08:00 - 14:00",
+        "location": "Pantai Kartini",
+        "category": "Budaya",
+        "attendees": "12K+",
+        "status": "Upcoming",
+        "image": "from-blue-500 to-indigo-500"
+    },
+    {
+        "id": "e2",
+        "title": "Jepara Jazz Festival",
+        "date": "15 May 2026",
+        "time": "19:00 - 23:00",
+        "location": "Alun-Alun Jepara",
+        "category": "Musik",
+        "attendees": "5K+",
+        "status": "Upcoming",
+        "image": "from-purple-500 to-pink-500"
+    },
+    {
+        "id": "e3",
+        "title": "Festival Ukir Internasional",
+        "date": "10 Jun 2026",
+        "time": "09:00 - 17:00",
+        "location": "Sentra Ukir Mulyoharjo",
+        "category": "Pameran",
+        "attendees": "3K+",
+        "status": "Upcoming",
+        "image": "from-amber-500 to-orange-500"
+    },
+    {
+        "id": "e4",
+        "title": "Baratan Ratu Kalinyamat",
+        "date": "25 Mar 2026",
+        "time": "18:30 - 21:00",
+        "location": "Kalinyamatan",
+        "category": "Budaya",
+        "attendees": "8K+",
+        "status": "Past",
+        "image": "from-emerald-500 to-teal-500"
+    },
+    {
+        "id": "e5",
+        "title": "Karimunjawa Culture Night",
+        "date": "05 Jul 2026",
+        "time": "19:00 - 22:00",
+        "location": "Karimunjawa",
+        "category": "Budaya",
+        "attendees": "2K+",
+        "status": "Upcoming",
+        "image": "from-cyan-500 to-blue-500"
+    }
+]

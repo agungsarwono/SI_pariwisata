@@ -1,18 +1,19 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { readData, writeData } from './utils/db'
 
 const app = new Hono()
 
 app.use('/*', cors())
 
-// Mock Database
+// Types
 interface Destination {
     id: string
     label: string
     type: string
     tags: string[]
-    users: number
+    users: number // Represents monthly avg visitors
     href: string
     description?: string
     location?: string
@@ -28,27 +29,9 @@ interface Report {
     author: string
     status: 'Published' | 'Draft' | 'Review'
     size: string
+    fileName?: string
     fileData?: string // Base64 string
 }
-
-const dbDestinations: Destination[] = [
-    { id: 'd1', label: 'Pulau Panjang', type: 'file', tags: ['destinasi', 'alam'], users: 12, href: '/destinasi/pulau-panjang' },
-    { id: 'd2', label: 'Karimunjawa', type: 'file', tags: ['destinasi', 'favorit'], users: 24, href: '/destinasi/karimunjawa' },
-    { id: 'd3', label: 'Pantai Kartini', type: 'file', tags: ['destinasi', 'pantai'], users: 8, href: '/destinasi/pantai-kartini' },
-    { id: 'd4', label: 'Benteng Portugis', type: 'file', tags: ['destinasi', 'sejarah'], users: 5, href: '/destinasi/benteng-portugis' },
-    { id: 'd5', label: 'Museum RA Kartini', type: 'file', tags: ['destinasi', 'sejarah'], users: 15, href: '/destinasi/museum-ra-kartini' },
-    { id: 'd6', label: 'Air Terjun Songgo Langit', type: 'file', tags: ['destinasi', 'alam'], users: 7, href: '/destinasi/air-terjun-songgo-langit' },
-]
-
-const dbReports: Report[] = [
-    { id: 'RPT-001', title: 'Laporan Kunjunguan Bulanan - Januari 2026', category: 'Statistik', date: '31 Jan 2026', author: 'Adi Nugroho', status: 'Published', size: '2.4 MB' },
-    { id: 'RPT-002', title: 'Evaluasi Kebersihan Pantai Kartini', category: 'Operasional', date: '28 Jan 2026', author: 'Siti Aminah', status: 'Review', size: '1.2 MB' },
-    { id: 'RPT-003', title: 'Audit Keuangan Tiket Masuk Q4 2025', category: 'Keuangan', date: '15 Jan 2026', author: 'Budi Santoso', status: 'Draft', size: '4.8 MB' },
-    { id: 'RPT-004', title: 'Laporan Insiden Keamanan - Karimunjawa', category: 'Insiden', date: '12 Jan 2026', author: 'Security Team', status: 'Published', size: '850 KB' },
-    { id: 'RPT-005', title: 'Proposal Pengembangan Fasilitas Museum', category: 'Perencanaan', date: '05 Jan 2026', author: 'Dinas Pariwisata', status: 'Review', size: '5.6 MB' },
-    { id: 'RPT-006', title: 'Rekapitulasi Event Budaya 2025', category: 'Event', date: '02 Jan 2026', author: 'Event Organizer', status: 'Published', size: '3.1 MB' },
-
-]
 
 interface Event {
     id: string
@@ -63,70 +46,15 @@ interface Event {
     description?: string
 }
 
-const dbEvents: Event[] = [
-    {
-        id: 'e1',
-        title: 'Pesta Lomban Kupat',
-        date: '20 Apr 2026',
-        time: '08:00 - 14:00',
-        location: 'Pantai Kartini',
-        category: 'Budaya',
-        attendees: '12K+',
-        status: 'Upcoming',
-        image: 'from-blue-500 to-indigo-500'
-    },
-    {
-        id: 'e2',
-        title: 'Jepara Jazz Festival',
-        date: '15 May 2026',
-        time: '19:00 - 23:00',
-        location: 'Alun-Alun Jepara',
-        category: 'Musik',
-        attendees: '5K+',
-        status: 'Upcoming',
-        image: 'from-purple-500 to-pink-500'
-    },
-    {
-        id: 'e3',
-        title: 'Festival Ukir Internasional',
-        date: '10 Jun 2026',
-        time: '09:00 - 17:00',
-        location: 'Sentra Ukir Mulyoharjo',
-        category: 'Pameran',
-        attendees: '3K+',
-        status: 'Upcoming',
-        image: 'from-amber-500 to-orange-500'
-    },
-    {
-        id: 'e4',
-        title: 'Baratan Ratu Kalinyamat',
-        date: '25 Mar 2026',
-        time: '18:30 - 21:00',
-        location: 'Kalinyamatan',
-        category: 'Budaya',
-        attendees: '8K+',
-        status: 'Past',
-        image: 'from-emerald-500 to-teal-500'
-    },
-    {
-        id: 'e5',
-        title: 'Karimunjawa Culture Night',
-        date: '05 Jul 2026',
-        time: '19:00 - 22:00',
-        location: 'Karimunjawa',
-        category: 'Budaya',
-        attendees: '2K+',
-        status: 'Upcoming',
-        image: 'from-cyan-500 to-blue-500'
-    }
-]
-
+// Routes
 app.get('/', (c) => {
-    return c.text('Hello Hono!')
+    return c.text('Hello Hono with JSON DB!')
 })
 
-app.get('/search', (c) => {
+app.get('/search', async (c) => {
     const query = c.req.query('q')?.toLowerCase() || ''
+    const dbDestinations = await readData<Destination>('destinations.json')
+
     if (!query) return c.json(dbDestinations)
 
     // Simulating database filtering
@@ -137,9 +65,10 @@ app.get('/search', (c) => {
     return c.json(filtered)
 })
 
-app.get('/destinasi/:slug', (c) => {
+app.get('/destinasi/:slug', async (c) => {
     const slug = c.req.param('slug')
     const fullPath = `/destinasi/${slug}`
+    const dbDestinations = await readData<Destination>('destinations.json')
 
     const destination = dbDestinations.find(d => d.href === fullPath)
 
@@ -168,7 +97,7 @@ app.post('/destinasi', async (c) => {
             label: body.title,
             type: 'file',
             tags: body.tags ? body.tags.split(',').map((t: string) => t.trim()) : ['destinasi'],
-            users: 0,
+            users: body.users !== undefined ? Number(body.users) : Math.floor(Math.random() * 1000) + 100,
             href: href,
             description: body.description,
             location: body.location,
@@ -176,7 +105,9 @@ app.post('/destinasi', async (c) => {
             image: body.image
         }
 
+        const dbDestinations = await readData<Destination>('destinations.json')
         dbDestinations.push(newDestination)
+        await writeData('destinations.json', dbDestinations)
 
         return c.json({ message: 'Success', data: newDestination }, 201)
     } catch (e) {
@@ -184,8 +115,9 @@ app.post('/destinasi', async (c) => {
     }
 })
 
-app.delete('/destinasi/:id', (c) => {
+app.delete('/destinasi/:id', async (c) => {
     const id = c.req.param('id')
+    const dbDestinations = await readData<Destination>('destinations.json')
     const index = dbDestinations.findIndex(d => d.id === id)
 
     if (index === -1) {
@@ -193,6 +125,8 @@ app.delete('/destinasi/:id', (c) => {
     }
 
     const deleted = dbDestinations.splice(index, 1)
+    await writeData('destinations.json', dbDestinations)
+
     return c.json({ message: 'Deleted successfully', data: deleted[0] })
 })
 
@@ -200,6 +134,7 @@ app.put('/destinasi/:id', async (c) => {
     try {
         const id = c.req.param('id')
         const body = await c.req.json()
+        const dbDestinations = await readData<Destination>('destinations.json')
         const index = dbDestinations.findIndex(d => d.id === id)
 
         if (index === -1) {
@@ -214,20 +149,24 @@ app.put('/destinasi/:id', async (c) => {
             location: body.location || dbDestinations[index].location,
             description: body.description || dbDestinations[index].description,
             tags: body.tags ? body.tags.split(',').map((t: string) => t.trim()) : dbDestinations[index].tags,
+            users: body.users !== undefined ? Number(body.users) : dbDestinations[index].users,
             // Re-generate slug if title changes
             href: body.title ? `/destinasi/${body.title.toLowerCase().replace(/\s+/g, '-')}` : dbDestinations[index].href,
             image: body.image || dbDestinations[index].image
         }
 
         dbDestinations[index] = updatedDestination
+        await writeData('destinations.json', dbDestinations)
+
         return c.json({ message: 'Updated successfully', data: updatedDestination })
     } catch (e) {
         return c.json({ error: 'Invalid JSON' }, 400)
     }
 })
 
-app.get('/destinasi/id/:id', (c) => {
+app.get('/destinasi/id/:id', async (c) => {
     const id = c.req.param('id')
+    const dbDestinations = await readData<Destination>('destinations.json')
     const destination = dbDestinations.find(d => d.id === id)
 
     if (!destination) {
@@ -235,11 +174,63 @@ app.get('/destinasi/id/:id', (c) => {
     }
 
     return c.json(destination)
-    return c.json(destination)
 })
 
+// Import Endpoint
+app.post('/import/destinations', async (c) => {
+    try {
+        // Accepts an array of destinations from a JSON file
+        const body = await c.req.json()
+
+        if (!Array.isArray(body)) {
+            return c.json({ error: 'Input must be an array' }, 400)
+        }
+
+        const dbDestinations = await readData<Destination>('destinations.json')
+
+        // Strategy: Append new data. Generate IDs if missing, or keep if provided?
+        // Let's assume the user provides a clean list or we just append.
+        // For simplicity: We will just push them.
+
+        let addedCount = 0
+
+        body.forEach((item: any) => {
+            // Basic validation
+            if (item.label || item.title) {
+                const title = item.label || item.title
+                const newId = `d${Date.now() + Math.random()}`
+                const slug = title.toLowerCase().replace(/\s+/g, '-')
+                const href = `/destinasi/${slug}`
+
+                const newDestination: Destination = {
+                    id: newId,
+                    label: title,
+                    type: 'file',
+                    tags: item.tags || ['destinasi'],
+                    users: item.users || 0,
+                    href: href,
+                    description: item.description || '',
+                    location: item.location || '',
+                    category: item.category || 'Umum',
+                    image: item.image || '' // Base64 or url
+                }
+                dbDestinations.push(newDestination)
+                addedCount++
+            }
+        })
+
+        await writeData('destinations.json', dbDestinations)
+        return c.json({ message: `Successfully imported ${addedCount} destinations` }, 201)
+
+    } catch (e) {
+        return c.json({ error: 'Invalid JSON or persistence failed' }, 400)
+    }
+})
+
+
 // Report Endpoints
-app.get('/laporan', (c) => {
+app.get('/laporan', async (c) => {
+    const dbReports = await readData<Report>('reports.json')
     return c.json(dbReports)
 })
 
@@ -256,32 +247,41 @@ app.post('/laporan', async (c) => {
             author: 'Admin', // Hardcoded for now
             status: body.status || 'Draft',
             size: body.size || '0 KB',
+            fileName: body.fileName,
             fileData: body.fileData
         }
 
+        const dbReports = await readData<Report>('reports.json')
         dbReports.unshift(newReport) // Add to beginning
+        await writeData('reports.json', dbReports)
+
         return c.json({ message: 'Report created', data: newReport }, 201)
     } catch (e) {
         return c.json({ error: 'Invalid JSON' }, 400)
     }
 })
 
-app.delete('/laporan/:id', (c) => {
+app.delete('/laporan/:id', async (c) => {
     const id = c.req.param('id')
+    const dbReports = await readData<Report>('reports.json')
     const index = dbReports.findIndex(r => r.id === id)
     if (index === -1) return c.json({ error: 'Not found' }, 404)
 
     const deleted = dbReports.splice(index, 1)
+    await writeData('reports.json', dbReports)
+
     return c.json({ message: 'Deleted', data: deleted[0] })
 })
 
 // Event Endpoints
-app.get('/events', (c) => {
+app.get('/events', async (c) => {
+    const dbEvents = await readData<Event>('events.json')
     return c.json(dbEvents)
 })
 
-app.get('/events/:id', (c) => {
+app.get('/events/:id', async (c) => {
     const id = c.req.param('id')
+    const dbEvents = await readData<Event>('events.json')
     const event = dbEvents.find(e => e.id === id)
     if (!event) return c.json({ error: 'Event not found' }, 404)
     return c.json(event)
@@ -305,20 +305,96 @@ app.post('/events', async (c) => {
             description: body.description
         }
 
+        const dbEvents = await readData<Event>('events.json')
         dbEvents.unshift(newEvent)
+        await writeData('events.json', dbEvents)
+
         return c.json({ message: 'Event created', data: newEvent }, 201)
     } catch (e) {
         return c.json({ error: 'Invalid JSON' }, 400)
     }
 })
 
-app.delete('/events/:id', (c) => {
+app.delete('/events/:id', async (c) => {
     const id = c.req.param('id')
+    const dbEvents = await readData<Event>('events.json')
     const index = dbEvents.findIndex(e => e.id === id)
     if (index === -1) return c.json({ error: 'Not found' }, 404)
 
     const deleted = dbEvents.splice(index, 1)
+    await writeData('events.json', dbEvents)
+
     return c.json({ message: 'Deleted', data: deleted[0] })
+})
+
+// Dashboard Analytics Endpoint
+app.get('/dashboard/metrics', async (c) => {
+    const dbDestinations = await readData<Destination>('destinations.json')
+    const dbEvents = await readData<Event>('events.json')
+    const dbReports = await readData<Report>('reports.json')
+
+    // 1. Calculate Totals
+    const totalDestinations = dbDestinations.length
+    const totalEvents = dbEvents.filter(e => e.status === 'Upcoming').length
+    const totalReports = dbReports.length
+
+    // Calculate total visits from all destinations (This represents Monthly Average)
+    const totalMonthlyVisits = dbDestinations.reduce((acc, curr) => acc + curr.users, 0)
+
+    // 2. Generate Top Destinations (Sorted by users)
+    const topDestinations = [...dbDestinations]
+        .sort((a, b) => b.users - a.users)
+        .slice(0, 5)
+        .map(d => ({
+            name: d.label,
+            uv: d.users
+        }))
+
+    // 3. Generate Monthly Visitor Trend
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const currentMonthIndex = new Date().getMonth()
+
+    // Generate trend based on the Creation Date of Destinations
+    const visitorData = months.slice(0, currentMonthIndex + 2).map((month, index) => {
+        // Create a date object for the end of this month in the current year
+        const currentYear = new Date().getFullYear()
+        const endOfMonthDate = new Date(currentYear, index + 1, 0).getTime() // Last day of month
+
+        // Filter destinations that existed by the end of this month
+        const activeDestinations = dbDestinations.filter(d => {
+            // Check if ID has timestamp (d177...)
+            const match = d.id.match(/^d(\d+)/)
+            if (match && match[1].length > 10) {
+                const timestamp = Number(match[1])
+                return timestamp <= endOfMonthDate
+            }
+            // If ID matches old format (d1, d2...), assume it existed since Jan 1st
+            return true
+        })
+
+        // Sum up users for this month
+        const monthlyTotal = activeDestinations.reduce((acc, curr) => acc + curr.users, 0)
+
+        // For future months (index > currentMonthIndex), show 0 or projection?
+        // Let's show 0 to be accurate, or just slice up to current month.
+        // User wants accurate history.
+        return {
+            name: month,
+            value: monthlyTotal
+        }
+    }).slice(0, currentMonthIndex + 1) // Strict: Only show up to current month
+
+    return c.json({
+        stats: {
+            destinations: totalDestinations,
+            visits: totalMonthlyVisits, // Show actual total monthly visits
+            rating: 4.8,
+            events: totalEvents,
+            reports: totalReports
+        },
+        visitorData,
+        topDestinations
+    })
 })
 
 const port = 4000

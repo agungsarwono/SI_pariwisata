@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Save, Upload, FileText, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Save, Upload, FileText, CheckCircle, FileSpreadsheet, File as FileGeneric } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Toast } from '@/components/ui/custom-toast'
@@ -26,7 +26,24 @@ export default function TambahLaporanPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [showToast, setShowToast] = useState(false)
 
+    const getFileIcon = (fileName: string) => {
+        const ext = fileName.split('.').pop()?.toLowerCase()
+        if (ext === 'xlsx' || ext === 'xls') return <FileSpreadsheet size={24} />
+        if (ext === 'pdf') return <FileText size={24} /> // Or specific PDF icon if available, FileText is fine for docs
+        if (ext === 'doc' || ext === 'docx') return <FileText size={24} />
+        return <FileGeneric size={24} />
+    }
+
+    const getFileColor = (fileName: string) => {
+        const ext = fileName.split('.').pop()?.toLowerCase()
+        if (ext === 'xlsx' || ext === 'xls') return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30'
+        if (ext === 'pdf') return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
+        if (ext === 'doc' || ext === 'docx') return 'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30'
+        return 'text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800'
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
+        // ... (existing submit logic)
         e.preventDefault()
         setIsSubmitting(true)
 
@@ -122,7 +139,7 @@ export default function TambahLaporanPage() {
                             <input
                                 type="file"
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-50"
-                                accept=".pdf,.doc,.docx,.xls,.xlsx"
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                 onChange={(e) => {
                                     const file = e.target.files?.[0]
                                     if (file) {
@@ -147,8 +164,8 @@ export default function TambahLaporanPage() {
                             />
                             {formData.fileName ? (
                                 <div className="text-center">
-                                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                        <FileText size={24} />
+                                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3 ${getFileColor(formData.fileName)}`}>
+                                        {getFileIcon(formData.fileName)}
                                     </div>
                                     <p className="text-slate-900 dark:text-white font-medium">{formData.fileName}</p>
                                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{formData.size}</p>

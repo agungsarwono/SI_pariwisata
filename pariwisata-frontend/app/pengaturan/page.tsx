@@ -14,14 +14,19 @@ import {
     Save,
     Mail,
     Smartphone,
-    Check
+    Check,
+    Database,
+    Upload,
+    FileJson
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Papa from 'papaparse'
 
 export default function PengaturanPage() {
     const { setTheme, theme } = useTheme()
     const [activeTab, setActiveTab] = useState('profile')
     const [loading, setLoading] = useState(false)
+    const [uploading, setUploading] = useState(false)
     const [showToast, setShowToast] = useState(false)
     const [mounted, setMounted] = useState(false)
 
@@ -35,6 +40,7 @@ export default function PengaturanPage() {
     })
 
     const fileInputRef = React.useRef<HTMLInputElement>(null)
+    const fileImportRef = React.useRef<HTMLInputElement>(null)
 
     // Handle Hydration Mismatch for Theme
     useEffect(() => {
@@ -76,11 +82,78 @@ export default function PengaturanPage() {
         }
     }
 
+    const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setUploading(true)
+
+        const uploadData = async (data: any[]) => {
+            try {
+                const res = await fetch('http://localhost:4000/import/destinations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+
+                if (res.ok) {
+                    const result = await res.json()
+                    alert(result.message)
+                    setShowToast(true)
+                    setTimeout(() => setShowToast(false), 3000)
+                } else {
+                    alert('Gagal mengimpor data. Server menolak format data.')
+                }
+            } catch (error) {
+                alert('Gagal menghubungi server.')
+            } finally {
+                setUploading(false)
+                if (fileImportRef.current) fileImportRef.current.value = ''
+            }
+        }
+
+        if (file.name.endsWith('.csv')) {
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: (results) => {
+                    const mappedData = results.data.map((item: any) => ({
+                        title: item.nama_destinasi,
+                        category: item.kategori?.split('/')[0] || 'Umum',
+                        location: `${item.kota || ''}, ${item.provinsi || ''}`,
+                        description: item.deskripsi,
+                        tags: [item.kategori, ...(item.fasilitas?.split(',') || [])].map((t: string) => t?.trim()).filter(Boolean),
+                        users: (parseInt(item.rata_rata_kunjungan_harian) || 0) * 30, // Convert Daily to Monthly
+                        image: `https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80` // Generic travel placeholder
+                    })).filter((item: any) => item.title)
+                    uploadData(mappedData)
+                },
+                error: (error: any) => {
+                    alert('Gagal membaca file CSV: ' + error.message)
+                    setUploading(false)
+                }
+            })
+        } else {
+            const reader = new FileReader()
+            reader.onload = async (event) => {
+                try {
+                    const jsonData = JSON.parse(event.target?.result as string)
+                    uploadData(jsonData)
+                } catch (error) {
+                    alert('File JSON tidak valid.')
+                    setUploading(false)
+                }
+            }
+            reader.readAsText(file)
+        }
+    }
+
     const tabs = [
         { id: 'profile', label: 'Profil Akun', icon: User },
         { id: 'notifications', label: 'Notifikasi', icon: Bell },
         { id: 'security', label: 'Keamanan', icon: Shield },
         { id: 'system', label: 'Sistem', icon: Globe },
+        { id: 'database', label: 'Database', icon: Database },
     ]
 
     if (!mounted) {
@@ -335,6 +408,50 @@ export default function PengaturanPage() {
                                     </p>
                                 </div>
                                 <button className="px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800">Buka Portal Keamanan</button>
+                            </div>
+                        )}
+
+                        {activeTab === 'database' && (
+                            <div className="p-6 md:p-8 space-y-6">
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Manajemen Database</h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400">Import dan Export data sistem.</p>
+                                </div>
+
+                                <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6 bg-slate-50 dark:bg-slate-800/50">
+                                    <div className="flex items-start gap-4">
+                                        <div className="p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
+                                            <FileJson size={24} />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h4 className="font-medium text-slate-900 dark:text-white">Import Data Destinasi</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 mb-4">
+                                                Upload file JSON atau CSV untuk menambahkan data destinasi secara massal. Struktur file harus sesuai format sistem.
+                                            </p>
+
+                                            <input
+                                                type="file"
+                                                ref={fileImportRef}
+                                                onChange={handleImport}
+                                                accept=".json,.csv"
+                                                className="hidden"
+                                            />
+
+                                            <button
+                                                onClick={() => fileImportRef.current?.click()}
+                                                disabled={uploading}
+                                                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
+                                            >
+                                                {uploading ? (
+                                                    <div className="w-4 h-4 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
+                                                ) : (
+                                                    <Upload size={16} />
+                                                )}
+                                                {uploading ? 'Mengupload...' : 'Pilih File JSON / CSV'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </motion.div>

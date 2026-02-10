@@ -1,0 +1,391 @@
+[
+  {
+    "id": "d1",
+    "label": "Pulau Panjang",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "alam"
+    ],
+    "users": 1200,
+    "href": "/destinasi/pulau-panjang"
+  },
+  {
+    "id": "d2",
+    "label": "Karimunjawa",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "favorit"
+    ],
+    "users": 2400,
+    "href": "/destinasi/karimunjawa"
+  },
+  {
+    "id": "d3",
+    "label": "Pantai Kartini",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "pantai"
+    ],
+    "users": 850,
+    "href": "/destinasi/pantai-kartini"
+  },
+  {
+    "id": "d4",
+    "label": "Benteng Portugis",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "sejarah"
+    ],
+    "users": 500,
+    "href": "/destinasi/benteng-portugis"
+  },
+  {
+    "id": "d5",
+    "label": "Museum RA Kartini",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "sejarah"
+    ],
+    "users": 1500,
+    "href": "/destinasi/museum-ra-kartini"
+  },
+  {
+    "id": "d6",
+    "label": "Air Terjun Songgo Langit",
+    "type": "file",
+    "tags": [
+      "destinasi",
+      "alam"
+    ],
+    "users": 700,
+    "href": "/destinasi/air-terjun-songgo-langit"
+  },
+  {
+    "id": "d1770706861528.7217",
+    "label": "Pantai Bandengan",
+    "type": "file",
+    "tags": [
+      "pantai",
+      "keluarga",
+      "populer"
+    ],
+    "users": 5000,
+    "href": "/destinasi/pantai-bandengan",
+    "description": "Pantai pasir putih yang indah dengan air jernih dan ombak yang tenang, cocok untuk keluarga.",
+    "location": "Jepara",
+    "category": "Bahari",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+  },
+  {
+    "id": "d1770706861530.4922",
+    "label": "Air Terjun Jurang Nganten",
+    "type": "file",
+    "tags": [
+      "air terjun",
+      "petualangan"
+    ],
+    "users": 300,
+    "href": "/destinasi/air-terjun-jurang-nganten",
+    "description": "Air terjun tersembunyi dengan suasana yang tenang dan alami.",
+    "location": "Pakis Aji",
+    "category": "Alam",
+    "image": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9"
+  },
+  {
+    "id": "d1770706861530.0127",
+    "label": "Pulau Mandalika",
+    "type": "file",
+    "tags": [
+      "island",
+      "snorkeling"
+    ],
+    "users": 1200,
+    "href": "/destinasi/pulau-mandalika",
+    "description": "Pulau kecil yang eksotis dengan potensi wisata bahari yang besar.",
+    "location": "Jepara Utara",
+    "category": "Bahari",
+    "image": "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5"
+  },
+  {
+    "id": "d1770707753944.6494",
+    "label": "Candi Borobudur",
+    "type": "file",
+    "tags": [
+      "Candi/Sejarah",
+      "Parkir",
+      "Toilet",
+      "Musholla",
+      "Restoran",
+      "Toko Souvenir"
+    ],
+    "users": 96000,
+    "href": "/destinasi/candi-borobudur",
+    "description": "Candi Buddha terbesar di dunia dan situs warisan dunia UNESCO",
+    "location": "Magelang, Jawa Tengah",
+    "category": "Candi",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.9062",
+    "label": "Candi Prambanan",
+    "type": "file",
+    "tags": [
+      "Candi/Sejarah",
+      "Parkir",
+      "Toilet",
+      "Musholla",
+      "Museum",
+      "Food Court"
+    ],
+    "users": 84000,
+    "href": "/destinasi/candi-prambanan",
+    "description": "Kompleks candi Hindu terbesar di Indonesia",
+    "location": "Sleman, DI Yogyakarta",
+    "category": "Candi",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.0752",
+    "label": "Pantai Parangtritis",
+    "type": "file",
+    "tags": [
+      "Pantai/Alam",
+      "Parkir",
+      "Toilet",
+      "Warung Makan",
+      "Rental ATV"
+    ],
+    "users": 135000,
+    "href": "/destinasi/pantai-parangtritis",
+    "description": "Pantai dengan pemandangan sunset yang indah dan legenda Nyi Roro Kidul",
+    "location": "Bantul, DI Yogyakarta",
+    "category": "Pantai",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.9695",
+    "label": "Malioboro",
+    "type": "file",
+    "tags": [
+      "Belanja/Budaya",
+      "Toko",
+      "Restoran",
+      "Hotel",
+      "ATM",
+      "Toilet Umum"
+    ],
+    "users": 255000,
+    "href": "/destinasi/malioboro",
+    "description": "Jalan legendaris pusat perbelanjaan dan budaya Yogyakarta",
+    "location": "Yogyakarta, DI Yogyakarta",
+    "category": "Belanja",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.6902",
+    "label": "Keraton Yogyakarta",
+    "type": "file",
+    "tags": [
+      "Istana/Sejarah",
+      "Parkir",
+      "Toilet",
+      "Museum",
+      "Guide",
+      "Toko Souvenir"
+    ],
+    "users": 54000,
+    "href": "/destinasi/keraton-yogyakarta",
+    "description": "Istana resmi Kesultanan Ngayogyakarta Hadiningrat",
+    "location": "Yogyakarta, DI Yogyakarta",
+    "category": "Istana",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.6116",
+    "label": "Taman Sari",
+    "type": "file",
+    "tags": [
+      "Taman/Sejarah",
+      "Parkir",
+      "Toilet",
+      "Guide",
+      "Foto Studio"
+    ],
+    "users": 36000,
+    "href": "/destinasi/taman-sari",
+    "description": "Taman air bekas tempat pemandian keluarga Sultan",
+    "location": "Yogyakarta, DI Yogyakarta",
+    "category": "Taman",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.6235",
+    "label": "Pantai Indrayanti",
+    "type": "file",
+    "tags": [
+      "Pantai/Alam",
+      "Parkir",
+      "Toilet",
+      "Gazebo",
+      "Restoran",
+      "Penginapan"
+    ],
+    "users": 63,
+    "href": "/destinasi/pantai-indrayanti",
+    "description": "Pantai dengan pasir putih dan air jernih",
+    "location": "Gunungkidul, DI Yogyakarta",
+    "category": "Pantai",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.528",
+    "label": "Goa Pindul",
+    "type": "file",
+    "tags": [
+      "Wisata Alam/Petualangan",
+      "Parkir",
+      "Toilet",
+      "Musholla",
+      "Warung",
+      "Rental Pelampung"
+    ],
+    "users": 194,
+    "href": "/destinasi/goa-pindul",
+    "description": "Wisata cave tubing di goa dengan sungai bawah tanah",
+    "location": "Gunungkidul, DI Yogyakarta",
+    "category": "Wisata Alam",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.444",
+    "label": "Hutan Pinus Mangunan",
+    "type": "file",
+    "tags": [
+      "Hutan/Alam",
+      "Parkir",
+      "Toilet",
+      "Spot Foto",
+      "Warung"
+    ],
+    "users": 45,
+    "href": "/destinasi/hutan-pinus-mangunan",
+    "description": "Hutan pinus dengan spot foto instagramable",
+    "location": "Bantul, DI Yogyakarta",
+    "category": "Hutan",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.8843",
+    "label": "Museum Ullen Sentalu",
+    "type": "file",
+    "tags": [
+      "Museum/Budaya",
+      "Parkir",
+      "Toilet",
+      "Cafe",
+      "Toko Souvenir"
+    ],
+    "users": 84,
+    "href": "/destinasi/museum-ullen-sentalu",
+    "description": "Museum kebudayaan Jawa dengan koleksi batik dan artefak kerajaan",
+    "location": "Sleman, DI Yogyakarta",
+    "category": "Museum",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.186",
+    "label": "Alun-alun Kidul",
+    "type": "file",
+    "tags": [
+      "Taman/Budaya",
+      "Parkir",
+      "Toilet",
+      "Warung",
+      "Rental Sepeda"
+    ],
+    "users": 105,
+    "href": "/destinasi/alun-alun-kidul",
+    "description": "Alun-alun selatan dengan tradisi masangin dan lampu hias",
+    "location": "Yogyakarta, DI Yogyakarta",
+    "category": "Taman",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.2632",
+    "label": "Tebing Breksi",
+    "type": "file",
+    "tags": [
+      "Wisata Alam",
+      "Parkir",
+      "Toilet",
+      "Spot Foto"
+    ],
+    "users": 285,
+    "href": "/destinasi/tebing-breksi",
+    "description": "Bekas tambang batu yang disulap menjadi destinasi wisata",
+    "location": "Sleman, DI Yogyakarta",
+    "category": "Wisata Alam",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.96",
+    "label": "Candi Ratu Boko",
+    "type": "file",
+    "tags": [
+      "Candi/Sejarah",
+      "Parkir",
+      "Toilet",
+      "Musholla",
+      "Cafe",
+      "Museum"
+    ],
+    "users": 33,
+    "href": "/destinasi/candi-ratu-boko",
+    "description": "Kompleks keraton dengan pemandangan sunset terbaik",
+    "location": "Sleman, DI Yogyakarta",
+    "category": "Candi",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.1858",
+    "label": "Kaliurang",
+    "type": "file",
+    "tags": [
+      "Wisata Alam",
+      "Hotel",
+      "Restoran",
+      "Parkir",
+      "Toilet",
+      "Jalur Hiking"
+    ],
+    "users": 53,
+    "href": "/destinasi/kaliurang",
+    "description": "Kawasan wisata pegunungan di lereng Merapi",
+    "location": "Sleman, DI Yogyakarta",
+    "category": "Wisata Alam",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "d1770707753945.4714",
+    "label": "Pantai Timang",
+    "type": "file",
+    "tags": [
+      "Pantai/Petualangan",
+      "Parkir",
+      "Toilet",
+      "Warung",
+      "Gondola"
+    ],
+    "users": 225,
+    "href": "/destinasi/pantai-timang",
+    "description": "Pantai dengan gondola menuju pulau karang",
+    "location": "Gunungkidul, DI Yogyakarta",
+    "category": "Pantai",
+    "image": "https://images.unsplash.com/photo-1542259659484-9d10660d73da?auto=format&fit=crop&q=80"
+  }
+]

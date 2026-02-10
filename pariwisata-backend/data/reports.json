@@ -1,0 +1,62 @@
+[
+    {
+        "id": "RPT-001",
+        "title": "Laporan Kunjungan Bulanan - Januari 2026",
+        "category": "Statistik",
+        "date": "31 Jan 2026",
+        "author": "Adi Nugroho",
+        "status": "Published",
+        "size": "2.4 MB",
+        "fileName": "Laporan_Januari_2026.pdf"
+    },
+    {
+        "id": "RPT-002",
+        "title": "Evaluasi Kebersihan Pantai Kartini",
+        "category": "Operasional",
+        "date": "28 Jan 2026",
+        "author": "Siti Aminah",
+        "status": "Review",
+        "size": "1.2 MB",
+        "fileName": "Evaluasi_Kebersihan.docx"
+    },
+    {
+        "id": "RPT-003",
+        "title": "Audit Keuangan Tiket Masuk Q4 2025",
+        "category": "Keuangan",
+        "date": "15 Jan 2026",
+        "author": "Budi Santoso",
+        "status": "Draft",
+        "size": "4.8 MB",
+        "fileName": "Audit_Keuangan_Q4.xlsx"
+    },
+    {
+        "id": "RPT-004",
+        "title": "Laporan Insiden Keamanan - Karimunjawa",
+        "category": "Insiden",
+        "date": "12 Jan 2026",
+        "author": "Security Team",
+        "status": "Published",
+        "size": "850 KB",
+        "fileName": "Laporan_Insiden.pdf"
+    },
+    {
+        "id": "RPT-005",
+        "title": "Proposal Pengembangan Fasilitas Museum",
+        "category": "Perencanaan",
+        "date": "05 Jan 2026",
+        "author": "Dinas Pariwisata",
+        "status": "Review",
+        "size": "5.6 MB",
+        "fileName": "Proposal_Pengembangan.docx"
+    },
+    {
+        "id": "RPT-006",
+        "title": "Rekapitulasi Event Budaya 2025",
+        "category": "Event",
+        "date": "02 Jan 2026",
+        "author": "Event Organizer",
+        "status": "Published",
+        "size": "3.1 MB",
+        "fileName": "Rekap_Event_2025.xlsx"
+    }
+]

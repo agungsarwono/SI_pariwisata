@@ -1,0 +1,39 @@
+[
+    {
+        "title": "Pantai Bandengan",
+        "category": "Bahari",
+        "location": "Jepara",
+        "description": "Pantai pasir putih yang indah dengan air jernih dan ombak yang tenang, cocok untuk keluarga.",
+        "tags": [
+            "pantai",
+            "keluarga",
+            "populer"
+        ],
+        "users": 5000,
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+    },
+    {
+        "title": "Air Terjun Jurang Nganten",
+        "category": "Alam",
+        "location": "Pakis Aji",
+        "description": "Air terjun tersembunyi dengan suasana yang tenang dan alami.",
+        "tags": [
+            "air terjun",
+            "petualangan"
+        ],
+        "users": 300,
+        "image": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9"
+    },
+    {
+        "title": "Pulau Mandalika",
+        "category": "Bahari",
+        "location": "Jepara Utara",
+        "description": "Pulau kecil yang eksotis dengan potensi wisata bahari yang besar.",
+        "tags": [
+            "island",
+            "snorkeling"
+        ],
+        "users": 1200,
+        "image": "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5"
+    }
+]
